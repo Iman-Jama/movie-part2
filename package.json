@@ -1,0 +1,19 @@
+{
+  "name": "the-movie-sql",
+  "version": "1.0.0",
+  "description": "A website to access your favourite movies, reviews and ratings, as well as follow your friends to see their favourites too.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Iman-Jama/movie-part2.git"
+  },
+  "author": "Aaron, Faith, Iman and Leesa.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Iman-Jama/movie-part2/issues"
+  },
+  "homepage": "https://github.com/Iman-Jama/movie-part2#readme"
+}
