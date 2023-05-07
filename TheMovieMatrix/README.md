@@ -45,11 +45,11 @@ So that with that information I can decide if I want to watch it.
 ## Authors
 [Leesa Ali](https://github.com/Leesaal)
 
-[Aaron Hickman](https://github.com/Hicku)
+[Carmela Rey](https://github.com/Cdrcar)
 
 [Iman Jama](https://github.com/Iman-Jama)
 
-[Faith Meades](https://github.com/FaithsCoding)
+[Yvonne Salmon](https://github.com/SalmY001)
 
 
 ## License
