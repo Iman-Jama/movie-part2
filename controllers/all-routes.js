@@ -17,6 +17,10 @@ router.get("/film", async (req, res) => {
   return res.render("film", { title: "film id" });
 });
 
+router.get("/filmlist", async (req, res) => {
+  return res.render("filmlist", { title: "filmlist" });
+});
+
 router.get("/register", async (req, res) => {
   return res.render("register", { title: "Register" });
 });
