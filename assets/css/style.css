@@ -1,4 +1,40 @@
-*{
+
+body{
+    width: 80%;
+}
+
+#main-div {
+    background-color: #5CDB95;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* *{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color-scheme: dark;
     color:white;
@@ -89,9 +125,9 @@ footer {
 
 .image-box{
     /* max-width: 600px; */
-    margin: 20px auto;
+    /* margin: 20px auto; */
 
-}
+/* }
 .movieMetaData {
     max-width:80%;
 }
@@ -114,10 +150,10 @@ main {
 
 .movieInfo {
     /* float: right; */
-    display: flex;
+    /* display: flex; */
     
     
-}
+/* }
 
 .trailer {
    margin: 32px auto;
@@ -170,5 +206,4 @@ main {
         margin: 0 auto;
         
     }
-}
-
+} */

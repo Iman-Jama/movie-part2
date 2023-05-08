@@ -2,7 +2,7 @@ const app = require("../server.js");
 const router = require("express").Router();
 
 router.get("/", async (req, res) => {
-  return res.render("home");
+  return res.render("home", { title: "Homepage" });
 });
 
 router.get("/user/:num", async (req, res) => {
@@ -10,11 +10,11 @@ router.get("/user/:num", async (req, res) => {
 });
 
 router.get("/login", async (req, res) => {
-  return res.render("login");
+  return res.render("login", { title: "login" });
 });
 
 router.get("/register", async (req, res) => {
-  return res.render("register");
+  return res.render("register", { title: "Register" });
 });
 
 module.exports = router;
