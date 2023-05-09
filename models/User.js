@@ -40,6 +40,11 @@ User.init(
           len: [8],
         },
       },
+      reviewsId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        unique: true,
+      }
 
     },
     {

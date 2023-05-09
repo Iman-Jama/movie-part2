@@ -12,8 +12,19 @@ const PORT = process.env.PORT || 3008;
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
-app.use(express.static(path.join(__dirname, "css")));
-app.use(require("./controllers/all-routes"));
+app.use(express.static(path.join(__dirname, "public")));
+app.use(require("./routes/all-routes"));
+
+
+// Direct user to static files
+app.get("/", (req, res) => {
+  res.sendFile("./index.html");
+})
+
+// To direct user to "page not found" for all other pages
+// app.get("*", (req, res) => {
+//   res.
+// })
 
 
 // Starts the server to begin listening
