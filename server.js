@@ -56,15 +56,15 @@ sequelize.sync({ force: false }).then(() => {
   console.log("Database connected!");
   app.listen(PORT, () =>
     console.log("Server listening on: http://localhost:" + PORT)
-  );
-
+);
+});
 
 
 
 // Starts the server to begin listening
-app.listen(PORT, () => {
-  console.log("Server listening on: http://localhost:" + PORT);
+// app.listen(PORT, () => {
+//   console.log("Server listening on: http://localhost:" + PORT);
 
-});
+// });
 
 module.exports = app;

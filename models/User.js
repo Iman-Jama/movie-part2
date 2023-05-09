@@ -31,6 +31,7 @@ User.init(
       validate: {
         len: [60],
       },
+    },
       review_ID: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -39,10 +40,11 @@ User.init(
           key: 'id',
         }
 
-      },
+      }
     
 
-    
+    },
+
     {
         hooks: {
           beforeCreate: async (newUserData) => {
