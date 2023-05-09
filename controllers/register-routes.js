@@ -3,8 +3,8 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 const { User } = require("../models");
 
-router.get("/", (req, res) => {
-  res.render("register");
+router.get("/register", async (req, res) => {
+  return res.render("register");
 });
 
 router.post("/register", async (req, res) => {
@@ -12,7 +12,7 @@ router.post("/register", async (req, res) => {
     const { name, email, password } = req.body;
 
     // Hash the password before saving to the database
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create a new user with the provided details
     const newUser = await User.create({

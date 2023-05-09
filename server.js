@@ -17,6 +17,7 @@ app.set("view engine", "handlebars");
 
 app.use(express.static(path.join(__dirname, "css")));
 app.use(require("./controllers/all-routes"));
+app.use(require("./controllers/register-routes"));
 
 // Connects to DB & starts the server to begin listening
 sequelize.sync({ force: false }).then(() => {
