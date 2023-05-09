@@ -13,9 +13,19 @@ User.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
+    first_name: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    last_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+
+    },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+
     },
     email: {
       type: DataTypes.STRING,
@@ -31,17 +41,10 @@ User.init(
       validate: {
         len: [60],
       },
-      review_ID: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'review_list',
-          key: 'id',
-        }
+    },
+      
 
       },
-    
-
     
     {
         hooks: {
@@ -56,6 +59,7 @@ User.init(
         underscored: true,
         modelName: 'user',
       }
+    
     );
   
     module.exports = User;

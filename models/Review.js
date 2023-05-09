@@ -21,12 +21,12 @@ Review.init(
             key: 'id',
           }
       },
-      movie_ID: {
+      imdb_ID: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: 'movie',
-            key: 'id',
+            key: 'ImdB_ID',
           }
       },
       review_text: {
