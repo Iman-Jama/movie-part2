@@ -1,19 +1,49 @@
-<head>
+<html>
+  <head>
   <meta charset="UTF-8">
-  <title>The Sequel</title>
+  <title> {{ title }} </title>
+   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
+<body class="bg-black" >
 
-<body>
-  <div class="flex-column justify-space-around">
-    <header class="display-flex justify-space-between align-center p-2">
-      <h1>
-        Welcome to The Sequel
-      </h1>
-    </header>
-      <main class="container container-fluid mt-5">
-        {{{ body }}}
-      </main>
+  <div id="main-div" class="h-full flex-column justify-space-around mx-20 my-20 bg-emerald-500 rounded-3xl">   
+
+<nav class="shadow-lg bg-sky-900 rounded-t-2xl">
+  <div class="max-w-6xl mx-auto px-4 flex justify-between items-center py-4">
+    <div class="flex items-center">
+      <a href="#" class="flex items-center">
+        <img src="" alt="Logo" class="h-8 w-8 mr-2" />
+      </a>
+    </div>
+    <div class="text-orange-50 text-3xl font-bold ml-36">The Sequel</div>
+    <div class="flex space-x-4">
+      <a href="../login.handlebars">
+        <button class="text-yellow-50 py-2 px-4 rounded hover:text-emerald-500">
+         Sign In
+        </button>
+      </a>
+      <a href="../signup.handlebars">
+        <button class="text-orange-50 py-2 px-4 rounded hover:text-emerald-500">
+          Sign Up
+        </button>
+      </a>
+    </div>
   </div>
+</nav>
+
+
+      <header class="display-flex justify-space-between align-center p-2"></header>
+ 
+      </header>
+
+      <main class="container container-fluid mt-5">
+      {{{ body }}}
+      </main>
+
+    </div>
+
+  
   </body>
 
 </html>

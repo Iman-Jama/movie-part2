@@ -1,4 +1,4 @@
-*{
+/* *{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color-scheme: dark;
     color:white;
@@ -14,7 +14,7 @@ a {
     font-size: 14px;
 }
 
-a:hover {
+a:hover {bq
     font-size: 16px;
     
 }
@@ -52,11 +52,6 @@ div header {
 }
 
 
-main {
-    font-size: large
-}
-
-
 
 button {
     text-align: left;
@@ -88,7 +83,7 @@ footer {
 }
 
 .image-box{
-    /* max-width: 600px; */
+    
     margin: 20px auto;
 
 }
@@ -99,6 +94,7 @@ main {
     display: flex;
     margin-top: 10%;
     flex-direction: column;
+    font-size: large
 }
 
 .footer {
@@ -113,16 +109,17 @@ main {
 } 
 
 .movieInfo {
-    /* float: right; */
+ 
     display: flex;
     
     
 }
 
 .trailer {
-   margin: 32px auto;
+   margin: 20px auto;
+   align-items: center;
+   justify-content: center;
    
-
 }
 
 .modal {
@@ -171,4 +168,4 @@ main {
         
     }
 }
-
+ */

@@ -21,6 +21,7 @@ Review.init(
             key: 'id',
           }
       },
+
       imdb_ID: {
         type: DataTypes.INTEGER,
         allowNull: false,
