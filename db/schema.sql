@@ -8,8 +8,7 @@ USE movie_db;
 
 CREATE TABLE user (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    first_name VARCHAR(30),
-    last_name VARCHAR(30),
-    username VARCHAR(30),
-    password VARCHAR(30)
+    name VARCHAR(30),
+    email VARCHAR(30),
+    password VARCHAR(100)
 );

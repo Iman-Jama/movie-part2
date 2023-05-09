@@ -8,6 +8,9 @@ const hbs = exphbs.create({});
 const app = express();
 const PORT = process.env.PORT || 3008;
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // Set Handlebars as the default template engine.
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
