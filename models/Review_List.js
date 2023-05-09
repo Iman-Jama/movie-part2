@@ -21,7 +21,7 @@ Review_list.init(
             key: 'id',
           }
       },
-      reviews: {
+      user_reviews: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
