@@ -1,9 +1,7 @@
-// Dependencies
 const express = require("express");
 const exphbs = require("express-handlebars");
 const path = require("path");
 const sequelize = require("./config/connection");
-const bcrypt = require("bcrypt");
 const hbs = exphbs.create({});
 
 // Sets up the Express App
@@ -16,18 +14,6 @@ app.set("view engine", "handlebars");
 
 app.use(express.static(path.join(__dirname, "css")));
 app.use(require("./controllers/all-routes"));
-
-app.get('/', (req,res) => {
-    res.render('home.handlebars')
-})
-
-app.get('/login', (req, res) => {
-    res.render('/login.handlebars')
-})
-
-app.get('/resgister', (req, res) => {
-    res.render('/register.handlebars')
-})
 
 // Connects to DB & starts the server to begin listening
 sequelize.sync({ force: false }).then(() => {

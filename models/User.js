@@ -6,7 +6,7 @@ class User extends Model {}
 
 User.init(
     {
-      // define columns
+      // defines the columns
       id: {
         type: DataTypes.INTEGER,
         allowNull: false,
