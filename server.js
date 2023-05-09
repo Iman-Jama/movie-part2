@@ -3,25 +3,35 @@ const exphbs = require("express-handlebars");
 const path = require("path");
 const sequelize = require("./config/connection");
 const hbs = exphbs.create({});
+
+
 const passport = require("passport");
 const session = require("express-session");
 const initializePassport = require("./config/passport-config");
 const User = require("./models/User");
+const routes = require("./controllers");
+
 
 // Sets up the Express App
 const app = express();
 const PORT = process.env.PORT || 3008;
 
+
 // Initialize Passport
-initializePassport(passport, User);
+
+
+app.use(express.json());
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded({ extended: true }));
+
 
 // Set Handlebars as the default template engine.
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
-app.use(express.static(path.join(__dirname, "css")));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+
+
+
 
 app.use(
   session({
@@ -34,7 +44,7 @@ app.use(
 
 // Passport middleware
 app.use(passport.initialize());
-app.use(passport.session());
+
 
 // Routes
 app.use(require("./controllers/all-routes"));
@@ -47,6 +57,14 @@ sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () =>
     console.log("Server listening on: http://localhost:" + PORT)
   );
+
+
+
+
+// Starts the server to begin listening
+app.listen(PORT, () => {
+  console.log("Server listening on: http://localhost:" + PORT);
+
 });
 
 module.exports = app;

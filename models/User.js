@@ -31,21 +31,31 @@ User.init(
       validate: {
         len: [60],
       },
-    },
-  },
-  {
-    hooks: {
-      beforeCreate: async (newUserData) => {
-        newUserData.password = await bcrypt.hash(newUserData.password, 10);
-        return newUserData;
-      },
-    },
-    sequelize,
-    timestamps: false,
-    freezeTableName: true,
-    underscored: true,
-    modelName: "User",
-  }
-);
+      review_ID: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'review_list',
+          key: 'id',
+        }
 
-module.exports = User;
+      },
+    
+
+    
+    {
+        hooks: {
+          beforeCreate: async (newUserData) => {
+            newUserData.password = await bcrypt.hash(newUserData.password, 10);
+            return newUserData;
+          },
+        },
+        sequelize,
+        timestamps: false,
+        freezeTableName: true,
+        underscored: true,
+        modelName: 'user',
+      }
+    );
+  
+    module.exports = User;
