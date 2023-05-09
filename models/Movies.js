@@ -7,18 +7,19 @@ class Movie extends Model {}
 Movie.init(
     {
       // define columns
-      id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
-      },
+      
       movie_name: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
       },
-      release_year: {
+      Imdb_ID: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        primaryKey: true,
+      },
+      runtime: {
         type:DataTypes.INTEGER,
         allowNull: false,
       },
@@ -40,6 +41,15 @@ Movie.init(
         allowNull: false,
         
       },
+      trailer: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+      },
+      poster_url: {
+        type: DataTypes.STRING,
+        allowNull:false,
+      }
 
     },
     
