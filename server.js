@@ -15,6 +15,10 @@ app.set("view engine", "handlebars");
 app.use(express.static(path.join(__dirname, "css")));
 app.use(require("./controllers/all-routes"));
 
+// Direct users to static files
+app.get("/", (req, res) => {
+  res.sendFile("./index.html");
+})
 
 // Starts the server to begin listening
 app.listen(PORT, () => {
