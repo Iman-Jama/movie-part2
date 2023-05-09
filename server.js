@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3008;
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
-app.use(express.static(path.join(__dirname, "css")));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(require("./controllers/all-routes"));
 
 // Direct users to static files
