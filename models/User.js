@@ -40,8 +40,18 @@ User.init(
           len: [8],
         },
       },
+      review_ID: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'review_list',
+          key: 'id',
+        }
 
-    },
+      }
+      },
+
+    
     {
         hooks: {
           beforeCreate: async (newUserData) => {

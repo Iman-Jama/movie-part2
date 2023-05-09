@@ -18,6 +18,11 @@ Movie.init(
         allowNull: false,
         unique: true
       },
+      Imdb_ID: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+      },
       release_year: {
         type:DataTypes.INTEGER,
         allowNull: false,
@@ -40,6 +45,11 @@ Movie.init(
         allowNull: false,
         
       },
+      trailer: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+      }
 
     },
     
