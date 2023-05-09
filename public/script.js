@@ -41,7 +41,7 @@ searchBtn.addEventListener("click", function (event) {
 //  API Calls to Movie Database: this Function will make 2 API calls; from the first response we obtain the movie title and imdbIDKey, from the second call we get information about the movie like the rating and plot. This function will also display a message on the screen if the input is empty or incorrect
 
 function searchMovie(movieName) {
-  etch("/api/moviesearch", {
+  fetch("/api/moviesearch", {
     method: "GET",
     body: {
       movieName,

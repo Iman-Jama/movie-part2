@@ -1,8 +1,6 @@
 const routes = require("express").Router();
 
-// CRUD here
-
-// fetch movie search data
+// fetch movie search data from first movie db api and second movie db api.
 routes.get("/moviesearch", (req, res) => {
   const options = {
     method: "GET",
@@ -56,5 +54,7 @@ routes.get("/moviesearch", (req, res) => {
       }
     });
 });
+
+// CRUD here
 
 module.exports = routes;
