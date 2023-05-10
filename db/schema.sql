@@ -10,7 +10,7 @@ CREATE TABLE user (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(30),
     email VARCHAR(30),
-    password VARCHAR(100)
+    password VARCHAR(60)
 );
 
 CREATE TABLE movies (

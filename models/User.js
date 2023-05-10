@@ -13,19 +13,9 @@ User.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    first_name: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    last_name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-
-    },
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-
     },
     email: {
       type: DataTypes.STRING,
@@ -38,37 +28,30 @@ User.init(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        len: [60],
-      },
     },
-      review_ID: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'review_list',
-          key: 'id',
-        }
+    // review_ID: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    //   references: {
+    //     model: "review_list",
+    //     key: "id",
+    //   },
+    //   },
+  },
 
-      }
-    
-
+  {
+    hooks: {
+      // beforeCreate: async (newUserData) => {
+      //   newUserData.password = await bcrypt.hash(newUserData.password, 10);
+      //   return newUserData;
+      // },
     },
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: "user",
+  }
+);
 
-    {
-        hooks: {
-          beforeCreate: async (newUserData) => {
-            newUserData.password = await bcrypt.hash(newUserData.password, 10);
-            return newUserData;
-          },
-        },
-        sequelize,
-        timestamps: false,
-        freezeTableName: true,
-        underscored: true,
-        modelName: 'user',
-      }
-    
-    );
-  
-    module.exports = User;
+module.exports = User;
