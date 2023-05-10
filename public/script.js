@@ -41,74 +41,39 @@ searchBtn.addEventListener("click", function (event) {
 //  API Calls to Movie Database: this Function will make 2 API calls; from the first response we obtain the movie title and imdbIDKey, from the second call we get information about the movie like the rating and plot. This function will also display a message on the screen if the input is empty or incorrect
 
 function searchMovie(movieName) {
-  // Options object with the headers to access RapidAPI and Movie Database
-  const options = {
+  fetch("/api/movies/moviesearch", {
     method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "019a625d93msh4b8ca83c4e651e4p1b04f6jsn06afb2002bf9",
-      "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
+    body: {
+      movieName,
     },
-  };
-
-  // First API call to The Movie Database Alternative for Title and imdbID
-
-  fetch(
-    "https://movie-database-alternative.p.rapidapi.com/?s=" +
-      movieName +
-      "&r=json&page=1",
-    options
-  )
-    // Parse the response to json
+  })
     .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      // check input is valid
-      if (data.hasOwnProperty("Search")) {
-        // Get Title from the first Search result
-        var movieTitleResults = data.Search[0].Title;
-
-        // Get the imdbIDKey from the first Search result
-        var imdbIDKey = data.Search[0].imdbID;
-
-        // Second API call to The Movie Database
-        var secondAPIKey = "97c267f9a2d9d89d1419f2261423af96";
-
-        fetch(
-          "https://api.themoviedb.org/3/movie/" +
-            imdbIDKey +
-            "?api_key=" +
-            secondAPIKey +
-            "&language=en-US"
-        )
-          // Parse the response to json
-          .then(function (response) {
-            return response.json();
-          })
-          .then(function (data) {
-            // Get Movie Title, Genre, Plot, Rating and Runtime from the fetch response
-            console.log(data);
-            movieTitle.textContent = data.original_title;
-            movieGenre.textContent = data.genres[0].name;
-            moviePlot.textContent = data.overview;
-            movieRating.textContent = Math.round(data.popularity) + "%";
-
-            movieRuntime.textContent = data.runtime + " minutes";
-            moviePoster.setAttribute("src", posterURL + data.poster_path);
-            videoSearch(youtubeAPIKey, movieName);
-            searchHistory(movieName);
-          });
-
-        // show modal if input is not a valid movie name
+      if (response.ok) {
+        return response.json();
       } else {
+        // show modal if input is not a valid movie name
         modal.classList.remove("hide");
         spanModal.onclick = function () {
           modal.classList.add("hide");
         };
       }
+    })
+    .then(function (data) {
+      // above moves to backend
+      // Get Movie Title, Genre, Plot, Rating and Runtime from the fetch response
+
+      console.log(data);
+      movieTitle.textContent = data.original_title;
+      movieGenre.textContent = data.genres[0].name;
+      moviePlot.textContent = data.overview;
+      movieRating.textContent = Math.round(data.popularity) + "%";
+
+      movieRuntime.textContent = data.runtime + " minutes";
+      moviePoster.setAttribute("src", posterURL + data.poster_path);
+      videoSearch(youtubeAPIKey, movieName);
+      searchHistory(movieName);
     });
 }
-
 // API Call to get Video Trailer //
 
 var youtubeAPIKey = "AIzaSyCwgbAu1Gc2IwjwgERI4QF7O9pogMLMmo4";
