@@ -16,10 +16,12 @@ CREATE TABLE user (
 CREATE TABLE movies (
     movie_name VARCHAR(100) NOT NULL,
     description VARCHAR(100) NOT NULL,
+    imdb_ID VARCHAR(100) NOT NULL,
     genre VARCHAR(50) NOT NULL,
     rating INT NOT NULL,
     runtime INT NOT NULL,
     trailer VARCHAR (200) NOT NULL,
+    INDEX (imdb_ID)
 );
 
 CREATE TABLE review (
@@ -27,6 +29,6 @@ CREATE TABLE review (
     user_id INT NOT NULL,
     imdb_ID VARCHAR(100) NOT NULL,
     review_text VARCHAR(300) NOT NULL,
-    FOREIGN KEY(user_ID) REFERENCE user(id),
-    FOREIGN KEY(imdb_ID) REFERENCE movies(imdb_ID)
+    FOREIGN KEY(user_id) REFERENCES user(id),
+    FOREIGN KEY(imdb_ID) REFERENCES movies(imdb_ID)
 );
