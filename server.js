@@ -15,8 +15,6 @@ const routes = require("./controllers");
 const app = express();
 const PORT = process.env.PORT || 3008;
 
-// Initialize Passport
-
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
@@ -36,6 +34,7 @@ app.use(
 
 // Passport middleware
 app.use(passport.initialize());
+app.use(passport.session());
 
 // Routes
 app.use(require("./controllers/all-routes"));
