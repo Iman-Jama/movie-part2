@@ -7,10 +7,12 @@ Review.belongsTo(User, {
 });
 
 User.hasMany(Review, {
+  as: "user_reviews",
   foreignKey: "user_id",
 });
 
 Movie.hasMany(Review, {
+  as: "movie_reviews",
   foreignKey: "imdb_ID",
 });
 
@@ -18,4 +20,4 @@ Review.belongsTo(User, {
   foreignKey: "imdb_ID",
 });
 
-module.exports = { User, Movie, Watchlist, Review, Review_List };
+module.exports = { User, Movie, Review };
