@@ -117,7 +117,7 @@ router.post("/film", async (req, res) => {
                   movieName: movieName,
                   genre: genre,
                   description: description,
-                  posterURL: posterURL,
+                  poster_URL: posterURL,
                   rating: rating,
                   trailer: trailer,
                   runtime: runtime,
