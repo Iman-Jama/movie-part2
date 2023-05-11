@@ -99,8 +99,8 @@ router.post("/film", async (req, res) => {
             var posterURL =
               "https://image.tmdb.org/t/p/w500" + data.poster_path;
 
-            var rating = Math.round(data.popularity) + "%";
-            var runtime = data.runtime + " minutes";
+            var rating = Math.round(data.popularity);
+            var runtime = data.runtime;
 
             fetch(
               "https://www.googleapis.com/youtube/v3/search?key=AIzaSyCwgbAu1Gc2IwjwgERI4QF7O9pogMLMmo4&type=video&part=snippet&maxResults=1&q=movie%20trailer%20" +
