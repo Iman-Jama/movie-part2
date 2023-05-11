@@ -8,46 +8,50 @@ Movie.init(
   {
     // define columns
 
+    
+    
     movie_name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       unique: true,
     },
-    imdb_ID: {
+
+    test_imdb: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       unique: true,
       primaryKey: true,
     },
+
     runtime: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     description: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     genre: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     rating: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
     reviews: {
       type: DataTypes.STRING,
-      allowNull: false,
-      field: "movie_reviews",
+      allowNull: true,
+      
     },
     trailer: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       unique: true,
     },
     poster_url: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
   },
 
@@ -56,7 +60,7 @@ Movie.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: "movie",
+    modelName: "movies",
   }
 );
 
