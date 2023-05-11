@@ -16,7 +16,7 @@ Movie.hasMany(Review, {
   foreignKey: "imdb_ID",
 });
 
-Review.belongsTo(User, {
+Review.belongsTo(Movie, {
   foreignKey: "imdb_ID",
 });
 
