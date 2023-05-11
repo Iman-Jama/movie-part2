@@ -15,7 +15,7 @@ Review.init(
       },
       account_ID: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: {
             model: 'user',
             key: 'id',
@@ -23,14 +23,14 @@ Review.init(
       },
       film_imdb: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
         references: {
-            model: 'movies',
-            key: 'test_imbd',
+            model: 'movie',
+            key: 'Imdb_ID',
           }
       },
       review_text: {
-        type:DataTypes.STRING,
+        type:DataTypes.STRING(500),
         allowNull: true,
       },
 

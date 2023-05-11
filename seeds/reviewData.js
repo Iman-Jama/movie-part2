@@ -1,27 +1,29 @@
+const {Review}= require('../models');
+
+const reviewData =
 [
     {
       "id": "1",
-      "user_ID": "4",
-      "account_ID": "tt0381707",
+      "account_ID": "4",
+      "movie_imdb": "tt0381707",
       "review_text":"Really funny film"
     },
     {
         "id": "2",
         "account_ID": "5",
-        "movie_imdb": "tt0393162",
+        "movie_imdb":"tt4154796",
         "review_text":"The film was too long winded"
     },
     {
         "id": "3",
         "account_ID": "6",
-        "movie_imdb": "tt0120338",
+        "movie_imdb": "tt0111161",
         "review_text":"I really enjoyed this film, it made me laugh"
       
-    },
-    {
-        "id": "4",
-        "account_ID": "7",
-        "movie_imdb": "tt1392170",
-        "review_text":"Not the best film."
-    }   
+    }
+    
   ]
+
+  const seedReviews = () => Movie.bulkCreate(Reviewdata);
+
+module.exports = seedReviews;

@@ -24,7 +24,7 @@ Movie.init(
       allowNull: false,
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(500),
       allowNull: false,
     },
     genre: {
@@ -35,21 +35,18 @@ Movie.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    reviews: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      field: "movie_reviews",
-    },
     trailer: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(500),
       allowNull: false,
       unique: true,
+       
     },
     poster_url: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(500),
       allowNull: false,
     },
   },
+
 
   {
     sequelize,
@@ -58,6 +55,7 @@ Movie.init(
     underscored: true,
     modelName: "movie",
   }
+
 );
 
 module.exports = Movie;

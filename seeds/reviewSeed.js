@@ -1,17 +1,19 @@
 const sequelize = require('../config/connection');
-const { Review } = require('../models');
 
-const reviewData = require('./reviewData.json');
+const seedUsers = require('./userData');
+const seedMovies = require('./movieData');
+const seedReviews = require('./reviewData')
 
-const seedDatabase = async () => {
+const seedAll = async () => {
   await sequelize.sync({ force: true });
 
-  await Review.bulkCreate(reviewData, {
-    individualHooks: true,
-    returning: true,
-  });
+  await seedUsers();
+
+  await seedMovies();
+
+  await seedReviews();
 
   process.exit(0);
 };
 
-seedDatabase();
+seedAll();

@@ -9,11 +9,15 @@ User.init(
     // defines the columns
     id: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
+    first_name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    last_name: {
       type: DataTypes.STRING,
       allowNull: true,
     },
