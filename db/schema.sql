@@ -14,14 +14,16 @@ CREATE TABLE user (
 );
 
 CREATE TABLE movies (
-    movie_name VARCHAR(100) NOT NULL,
-    description VARCHAR(400) NOT NULL,
-    imdb_ID VARCHAR(100) NOT NULL,
-    genre VARCHAR(50) NOT NULL,
+
+    movie_name VARCHAR(30) NOT NULL,
+    description TEXT NOT NULL,
+    imdb_ID VARCHAR(30) NOT NULL PRIMARY KEY,
+    genre VARCHAR(20) NOT NULL,
+
     rating INT NOT NULL,
     runtime INT NOT NULL,
-    trailer VARCHAR (200) NOT NULL,
-    INDEX (imdb_ID)
+    trailer TEXT NOT NULL,
+    poster_url TEXT NOT NULL
 );
 
 CREATE TABLE review (
