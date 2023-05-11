@@ -110,16 +110,16 @@ router.post("/film", async (req, res) => {
                 return response.json();
               })
               .then(function (data) {
-                var { videoId } = data.items[0].id;
+                // var { videoId } = data.items[0].id;
 
-                var trailer = "https://www.youtube.com/embed/" + videoId;
+                // var trailer = "https://www.youtube.com/embed/" + videoId;
                 return res.render("film", {
                   movieName: movieName,
                   genre: genre,
                   description: description,
                   poster_URL: posterURL,
                   rating: rating,
-                  trailer: trailer,
+                  // trailer: trailer,
                   runtime: runtime,
                 });
               });
