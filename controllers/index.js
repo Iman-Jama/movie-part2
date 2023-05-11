@@ -6,7 +6,7 @@ routes.use("/api", apiRoutes);
 
 // Direct users to static files
 // This needs to go through the handlebars
-routes.get("", (req, res) => {
+routes.get("/", async (req, res) => {
   res.sendFile("./index.html");
 });
 

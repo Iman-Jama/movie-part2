@@ -123,9 +123,7 @@ searchBtn.addEventListener("click", function (event) {
 
 function videoSearch(API, search) {
   fetch(
-    "https://www.googleapis.com/youtube/v3/search?key=" +
-      youtubeAPIKey +
-      "&type=video&part=snippet&maxResults=1&q=movie%20trailer%20" +
+    "https://www.googleapis.com/youtube/v3/search?key=AIzaSyCwgbAu1Gc2IwjwgERI4QF7O9pogMLMmo4&type=video&part=snippet&maxResults=1&q=movie%20trailer%20" +
       search
   )
     .then((response) => response.json())

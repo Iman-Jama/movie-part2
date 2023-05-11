@@ -1,13 +1,13 @@
 
 <div class="flex justify-center items-center">
-    <h1 class="w-1/2 mx-auto text-center">Film name</h1>
+    <h1 class="w-1/2 mx-auto text-center"> {{ movie_name }} </h1>
 </div>
 
 
 <div id="poster-div" class="bg-yellow-500 flex justify-center items-center">
 
     <h1 class="w-1/2 mx-auto text-center">Poster</h1>
-    <img src="./Wild_thornberrys_movie_ver2.jpg" alt="">
+    <img src="{{poster_URL}}" alt=""/>
 
 </div>
 
@@ -17,10 +17,10 @@
 <div class="flex justify-center items-center">
     <div class="flex">
         <div id="Genre" class="bg-purple-500 inline-block">
-            <p>Genre</p>
+            <p>Genre: {{genre}}</p>
         </div>
         <div id="rating" class="bg-red-500 inline-block">
-            <P>RATING</P>
+            <P>Rating: {{rating}}</P>
         </div>   
     </div>
 </div>  
@@ -28,23 +28,20 @@
 <div class="flex justify-center items-center">
 
     <div id="Synopsis" class="bg-orange-600 w-1/2 mx-auto text-center">
-        <p>
-            When a sadistic serial killer begins murdering key political figures in Gotham, 
-            Batman is forced to investigate the city's hidden corruption and question his family's involvement.
+        <p>{{ description }}
         </p>
     </div>
 
+</div>
+
+<div class="trailer container self-center items-center flex rounded w-1/2" id="movieTrailer">
+    <iframe width="560" height="215" src="{{trailer}}" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen id="trailer"></iframe>
 </div>
 
 
 <div id="reviews" class="bg-pink-500 flex justify-center items-center">
     <h2 class="block">Reviews</h2>
     <p class="block">Barry - This films is pants. 1 star</p>
-</div>
-
-
-<div id="Suggested films" class="bg-orange-500">
-    <h1>
-        Suggested films based on genre
-    </h1>
 </div>
