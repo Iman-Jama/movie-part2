@@ -1,17 +1,15 @@
 const express = require("express");
 const routes = require("express").Router();
-
-const { Movies } = require("../../models");
-const { Review, Movies, User } = require('../../models');
+const { Review, Movies, User } = require("../../models");
 
 // CRUD here#
-routes.get('/moviesearch', async (req, res) => {
+routes.get("/moviesearch", async (req, res) => {
   try {
     const reviewData = await Review.findAll({
       include: [
         {
           model: Movie,
-          attributes: ['movie_name', 'rating'],
+          attributes: ["movie_name", "rating"],
         },
       ],
     });
@@ -20,14 +18,13 @@ routes.get('/moviesearch', async (req, res) => {
       review.get({ plain: true })
     );
 
-    res.render('reviews', {
-      reviewedMovies
+    res.render("reviews", {
+      reviewedMovies,
     });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
 });
-
 
 module.exports = routes;
