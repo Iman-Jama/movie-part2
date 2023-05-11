@@ -9,29 +9,29 @@ Review.init(
       // define columns
       id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         primaryKey: true,
         autoIncrement: true
       },
-      user_ID: {
+      account_ID: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: 'user',
             key: 'id',
           }
       },
-      imdb_ID: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
+      film_imdb: {
+        type: DataTypes.STRING,
+        allowNull: true,
         references: {
-            model: 'movie',
-            key: 'ImdB_ID',
+            model: 'movies',
+            key: 'test_imbd',
           }
       },
       review_text: {
         type:DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
     },

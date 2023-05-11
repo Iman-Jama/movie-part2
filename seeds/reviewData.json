@@ -2,26 +2,26 @@
     {
       "id": "1",
       "user_ID": "4",
-      "imdb_ID": "tt0381707",
+      "account_ID": "tt0381707",
       "review_text":"Really funny film"
     },
     {
         "id": "2",
-        "user_ID": "5",
-        "imdb_ID": "tt0393162",
+        "account_ID": "5",
+        "movie_imdb": "tt0393162",
         "review_text":"The film was too long winded"
     },
     {
         "id": "3",
-        "user_ID": "6",
-        "imdb_ID": "tt0120338",
+        "account_ID": "6",
+        "movie_imdb": "tt0120338",
         "review_text":"I really enjoyed this film, it made me laugh"
       
     },
     {
         "id": "4",
-        "user_ID": "7",
-        "imdb_ID": "tt1392170",
+        "account_ID": "7",
+        "movie_imdb": "tt1392170",
         "review_text":"Not the best film."
     }   
   ]
