@@ -5,10 +5,7 @@
 
 
 <div id="poster-div" class="bg-yellow-500 flex justify-center items-center">
-
-    <h1 class="w-1/2 mx-auto text-center">Poster</h1>
-    <img src="{{poster_URL}}" alt=""/>
-
+    <img src="{{poster_URL}}"" class="block rounded-lg sm:w-32" alt="poster"/>
 </div>
 
 
@@ -22,8 +19,12 @@
         <div id="rating" class="bg-red-500 inline-block">
             <P>Rating: {{rating}}</P>
         </div>   
+        <div id="runtime" class="bg-yellow-500 inline-block">
+            <P>Runtime: {{runtime}}</P>
+        </div>
     </div>
 </div>  
+
 
 <div class="flex justify-center items-center">
 
@@ -43,5 +44,5 @@
 
 <div id="reviews" class="bg-pink-500 flex justify-center items-center">
     <h2 class="block">Reviews</h2>
-    <p class="block">Barry - This films is pants. 1 star</p>
+    <p class="block">{{review}}</p>
 </div>

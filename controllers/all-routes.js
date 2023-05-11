@@ -41,7 +41,8 @@ function ensureAuthenticated(req, res, next) {
   res.redirect("/login");
 }
 
-// fetch film data from apis
+// FETCH FILM DATA FROM APIS
+
 router.post("/film", async (req, res) => {
   var { movieName } = req.body;
 
@@ -90,17 +91,16 @@ router.post("/film", async (req, res) => {
           })
           .then(function (data) {
             // Get Movie Title, Genre, Plot, Rating and Runtime from the fetch response
-            console.log(data);
+            // console.log(data);
             movieName = data.original_title;
             var genre = data.genres[0].name;
             var description = data.overview;
+            console.log("https://image.tmdb.org/t/p/w500" + data.poster_path);
             var posterURL =
-              "https://image.tmdb.org/t/p/w500/" + data.poster_path;
+              "https://image.tmdb.org/t/p/w500" + data.poster_path;
 
             var rating = Math.round(data.popularity) + "%";
-
-            // movieRuntime.textContent = data.runtime + " minutes";
-            // moviePoster.setAttribute("src", posterURL + data.poster_path);
+            var runtime = data.runtime + " minutes";
 
             fetch(
               "https://www.googleapis.com/youtube/v3/search?key=AIzaSyCwgbAu1Gc2IwjwgERI4QF7O9pogMLMmo4&type=video&part=snippet&maxResults=1&q=movie%20trailer%20" +
@@ -120,6 +120,7 @@ router.post("/film", async (req, res) => {
                   posterURL: posterURL,
                   rating: rating,
                   trailer: trailer,
+                  runtime: runtime,
                 });
               });
           });
