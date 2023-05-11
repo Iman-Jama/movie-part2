@@ -7,51 +7,47 @@ class Movie extends Model {}
 Movie.init(
   {
     // define columns
-
-    
-    
     movie_name: {
       type: DataTypes.STRING,
       allowNull: true,
       unique: true,
     },
 
-    test_imdb: {
+    Imdb_ID: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
       unique: true,
       primaryKey: true,
     },
-
     runtime: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
     },
     description: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     genre: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     rating: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     reviews: {
       type: DataTypes.STRING,
-      allowNull: true,
-      
+      allowNull: false,
+      field: "movie_reviews",
     },
     trailer: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
       unique: true,
     },
     poster_url: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
   },
 
@@ -60,7 +56,7 @@ Movie.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: "movies",
+    modelName: "movie",
   }
 );
 
