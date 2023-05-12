@@ -1,7 +1,7 @@
 const app = require("../server.js");
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
-const { User } = require("../models");
+
 const { routes, response } = require("../server.js");
 
 router.get("/", async (req, res) => {
