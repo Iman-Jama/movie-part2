@@ -1,0 +1,26 @@
+[
+    {
+        "user_id": "1",
+        "name": "Faith",
+        "email": "faith@gmail.com",
+        "password":"pass"
+    },
+    {
+        "user_id": "2",
+        "name": "Iman",
+        "email": "iman@gmail.com",
+        "password":"pass"
+    },
+    {
+        "user_id": "3",
+        "name": "Aaron",
+        "email": "aaron@gmail.com",
+        "password":"pass"
+    },
+    {
+        "user_id": "4",
+        "name": "Leesa",
+        "email": "leesa@gmail.com",
+        "password":"pass"
+    }
+  ]
