@@ -28,3 +28,7 @@ const reviewData =
         "review_text":"Not the best film."
     }   
   ]
+
+  const seedReviews = () => Review.bulkCreate(reviewData);
+
+  module.exports = seedReviews;
