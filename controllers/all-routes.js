@@ -125,7 +125,7 @@ router.post("/film", async (req, res) => {
               });
           });
 
-        // show modal if input is not a valid movie name
+        // show status code 500 if no movie found in API database
       } else {
         res.status(500).send("Server error");
       }

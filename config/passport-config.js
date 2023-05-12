@@ -30,12 +30,12 @@ passport.use(
 );
 
 passport.serializeUser(function (user, done) {
-  done(null, user.id);
+  done(null, user.user_id);
 });
 
-passport.deserializeUser(async function (id, done) {
+passport.deserializeUser(async function (user_id, done) {
   try {
-    const user = await User.findByPk(id);
+    const user = await User.findByPk(user_id);
     if (!user) {
       return done(new Error("User not found"));
     }
