@@ -30,7 +30,7 @@ Review.init(
       },
     },
     review_text: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(500),
       allowNull: false,
     },
   },

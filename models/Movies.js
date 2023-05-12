@@ -23,7 +23,7 @@ Movie.init(
       allowNull: false,
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(500),
       allowNull: false,
     },
     genre: {
@@ -35,12 +35,12 @@ Movie.init(
       allowNull: false,
     },
     trailer: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(500),
       allowNull: false,
       unique: true,
     },
     poster_url: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(500),
       allowNull: false,
     },
   },
