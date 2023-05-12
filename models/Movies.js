@@ -9,11 +9,10 @@ Movie.init(
     // define columns
     movie_name: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
       unique: true,
     },
-
-    Imdb_ID: {
+    imdb_id: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
