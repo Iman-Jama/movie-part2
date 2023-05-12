@@ -11,16 +11,14 @@ User.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true,
+      autoIncrement: true
     },
-    first_name: {
+    name: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    last_name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
+
+    
     email: {
       type: DataTypes.STRING,
       allowNull: false,
