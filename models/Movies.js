@@ -9,11 +9,10 @@ Movie.init(
     // define columns
     movie_name: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
       unique: true,
     },
-
-    Imdb_ID: {
+    imdb_id: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
@@ -34,11 +33,6 @@ Movie.init(
     rating: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    reviews: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      field: "movie_reviews",
     },
     trailer: {
       type: DataTypes.STRING,

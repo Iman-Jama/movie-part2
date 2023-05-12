@@ -1,48 +1,47 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes } = require("sequelize");
 
-const sequelize = require('../config/connection.js');
+const sequelize = require("../config/connection.js");
 
 class Review extends Model {}
 
 Review.init(
-    {
-      // define columns
-      id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      account_ID: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: 'user',
-            key: 'id',
-          }
-      },
-      film_imdb: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        references: {
-            model: 'movies',
-            key: 'test_imbd',
-          }
-      },
-      review_text: {
-        type:DataTypes.STRING,
-        allowNull: true,
-      },
-
+  {
+    // define columns
+    review_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
     },
-    
-    {
-      sequelize,
-      timestamps: false,
-      freezeTableName: true,
-      underscored: true,
-      modelName: "review",
-    }
-  );
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "user",
+        key: "user_id",
+      },
+    },
+    imdb_id: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      references: {
+        model: "movie",
+        key: "imdb_id",
+      },
+    },
+    review_text: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  },
 
-  module.exports = Review;
+  {
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: "review",
+  }
+);
+
+module.exports = Review;
