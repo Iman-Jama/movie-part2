@@ -1,48 +1,74 @@
-# The Movie Matrix 🎬
+# The Movie SQL 🎬
+
+[Description](#description)
+
+[Built with](#built-with)
+
+[APIs](#APIs)
+
+[Deployment](#deployment)
+
+[Installation](#installation)
+
+[Final Result](#final-result)
+
+[User Story](#user-story)
+
+[Authors](#authors)
+
+[License](#license)
 
 ## Description
-This is a movie search engine that allows the user to input the name of a movie and as a result it will display relevant information about the movie such as:
-- Ratings
-- Plot summary
-- Genre 
-- Movie poster
-- Movie trailer 
 
-This site will save recent searches in the local storage for efficient searching.
+This is a movie search engine that allows the user to login, authenticate their login and then search the name of a movie. This program will display the searched movie using third party APIs to fetch the data and allow users to add/update/view/delete reviews on the movie.
 
 ## Built with
+
 - HTML
 - CSS
 - JavaScript
-- API
+- APIs
 - Tailwindcss
+- Handlebars
+- Passport.js
+- bcrypt
+- Express.js
+- Node.js
 
-## API
+## APIs
+
 [The Movie Database](https://www.themoviedb.org/?language=en-GB)
-
 
 [Movie Database Alternative](https://rapidapi.com/rapidapi/api/movie-database-alternative/details)
 
-[YouTube Data Api](https://developers.google.com/youtube/v3)
+[YouTube API](https://developers.google.com/youtube/v3)
 
 ## Deployment
-[Link to The Movie Matrix](https://leesaal.github.io/TheMovieMatrix/)
 
-[Link to GitHub](https://github.com/Leesaal/TheMovieMatrix)
+[Link to The Movie SQL]()
+
+[Link to GitHub](https://github.com/Iman-Jama/movie-part2)
+
+[Link to Heroku]()
+
+## Installation
+
+Please run "npm i" to install the required dependencies prior to running the program.
 
 ## Final Result
 
-![Final Result](./assets/images/final-result-01.png)
-
+![Final Result]()
 
 ## User Story
-As a movie lover,
 
-I want to visit an online site to search a movie by it's title and see information on it's ratings and trailer,
+As an opinionated movie lover,
 
-So that with that information I can decide if I want to watch it.
+I want to visit an online site, where I can login, have my credentials verified and search a movie by it's title and see information on it. I then want to add/update/delete reviews for the films I have seen and see other people's thoughts on the movie too.
+
+So that I can share my thoughts on the film and decide if I want to watch a movie from other people's reviews.
 
 ## Authors
+
 [Leesa Ali](https://github.com/Leesaal)
 
 [Aaron Hickman](https://github.com/Hicku)
@@ -50,7 +76,6 @@ So that with that information I can decide if I want to watch it.
 [Iman Jama](https://github.com/Iman-Jama)
 
 [Faith Meades](https://github.com/FaithsCoding)
-
 
 ## License
 
