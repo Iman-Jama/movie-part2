@@ -1,3 +1,6 @@
+const {Review}= require('../models');
+
+const reviewData =
 [
     {
         "review_id": "1",
@@ -25,3 +28,7 @@
         "review_text":"Not the best film."
     }   
   ]
+
+  const seedReviews = () => Review.bulkCreate(reviewData);
+
+  module.exports = seedReviews;

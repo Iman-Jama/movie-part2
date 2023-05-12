@@ -38,12 +38,14 @@ Movie.init(
       type: DataTypes.STRING(500),
       allowNull: false,
       unique: true,
+       
     },
     poster_url: {
       type: DataTypes.STRING(500),
       allowNull: false,
     },
   },
+
 
   {
     sequelize,
@@ -52,6 +54,7 @@ Movie.init(
     underscored: true,
     modelName: "movie",
   }
+
 );
 
 module.exports = Movie;
