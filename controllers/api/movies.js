@@ -1,8 +1,10 @@
 const express = require("express");
 const routes = require("express").Router();
-const { Review, Movies, User } = require("../../models");
+const { Review, Movie, User } = require("../../models");
+const app = require("../../server");
 
-// CRUD here#
+// CRUD here
+
 routes.get("/moviesearch", async (req, res) => {
   try {
     const reviewData = await Review.findAll({
