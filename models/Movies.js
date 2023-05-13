@@ -37,8 +37,8 @@ Movie.init(
     trailer: {
       type: DataTypes.STRING(500),
       allowNull: true,
-      unique: false,
       defaultValue: "",
+      unique: false,
     },
     poster_url: {
       type: DataTypes.STRING(500),
