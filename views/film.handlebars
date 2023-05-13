@@ -4,8 +4,8 @@
 </div>
 
 
-<div id="poster-div" class="bg-yellow-500 flex justify-center items-center">
-    <img src="{{poster_URL}}"" class="block rounded-lg sm:w-32" alt="poster"/>
+<div id="poster-div" class="bg-amber-400 flex justify-center items-center h-100 mb-2">
+    <img src="{{poster_URL}}"" class="block rounded-lg lg:w-80" alt="poster"/>
 </div>
 
 
@@ -13,13 +13,13 @@
 
 <div class="flex justify-center items-center">
     <div class="flex">
-        <div id="Genre" class="bg-purple-500 inline-block">
+        <div id="Genre" class="inline-block border-stone-200 border-b-2 p-1 m-1">
             <p>Genre: {{genre}}</p>
         </div>
-        <div id="rating" class="bg-red-500 inline-block">
+        <div id="rating" class="inline-block border-stone-200 p-1 border-b-2 m-1">
             <P>Rating: {{rating}}%</P>
         </div>   
-        <div id="runtime" class="bg-yellow-500 inline-block">
+        <div id="runtime" class="inline-block border-stone-200 p-1 border-b-2 m-1">
             <P>Runtime: {{runtime}} minutes</P>
         </div>
     </div>
@@ -28,7 +28,7 @@
 
 <div class="flex justify-center items-center">
 
-    <div id="Synopsis" class="bg-orange-600 w-1/2 mx-auto text-center">
+    <div id="Synopsis" class="w-1/2 mx-auto text-center mt-3">
         <p>{{ description }}
         </p>
     </div>
