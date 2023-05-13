@@ -7,7 +7,7 @@ const { routes, response } = require("../server.js");
 let isauthenticated = false;
 
 router.get("/", async (req, res) => {
-  return res.render("home", { title: "page", isauthenticated: true});
+  return res.render("home", { title: "page", isauthenticated: true });
 });
 
 router.get("/user/:num", async (req, res) => {
@@ -33,7 +33,7 @@ router.get("/register", async (req, res) => {
 });
 
 router.get("/dashboard", ensureAuthenticated, async (req, res) => {
-  return res.render("dashboard", {isauthenticated: true});
+  return res.render("dashboard", { isauthenticated: true });
 });
 
 function ensureAuthenticated(req, res, next) {
@@ -109,11 +109,6 @@ router.post("/film", async (req, res) => {
                 return response.json();
               })
 
-              .then(function (data) {
-                var { videoId } = data.items[0].id;
-
-                var trailer = "https://www.youtube.com/embed/" + videoId;
-
               .then(async function (data) {
                 // var { videoId } = data.items[0].id;
 
@@ -139,7 +134,6 @@ router.post("/film", async (req, res) => {
                   console.log(err);
                   console.log("Movie not added.");
                 }
-
 
                 return res.render("film", {
                   movieName: movieName,
