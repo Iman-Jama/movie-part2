@@ -1,12 +1,23 @@
-<h1> dashboard placeholder</h1>
-<form action="/film" method="POST">
-<div class="movieSearch">
-  <input autocomplete="off" id="movieName" name="movieName" type="text"
-    class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600 bg-stone-200"
-    placeholder="Movie Name">
-  <button type="submit">Search</button>
-</div>
+
+<form action="/film" method="POST" class="mx-auto items-center">
+  <div class="flex flex-col items-center">
+    <div class="movieSearch">
+      <input autocomplete="off" id="movieName" name="movieName" type="text"
+        class="rounded-lg peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-sky-900 bg-stone-200"
+        placeholder="Movie Name">
+      <div class="bg-red-500 flex justify-center mt-5">
+        <button type="submit" class="text-bold text-stone-200">Search</button>
+      </div>
+    </div>
+  </div>  
 </form>
-<form action="/logout" method="POST">
+<form action="/logout" method="POST" class="mx-auto w-1/2">
   <button type="submit">Sign Out</button>
 </form>
+
+
+
+
+
+
+

@@ -15,6 +15,7 @@ const routes = require("./controllers");
 const app = express();
 const PORT = process.env.PORT || 3008;
 
+
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
@@ -37,6 +38,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
+// app.use("/", routes);
 app.use(require("./controllers/all-routes"));
 app.use(require("./controllers/register-routes"));
 app.use(require("./controllers/login-routes"));
