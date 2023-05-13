@@ -36,16 +36,15 @@ Movie.init(
     },
     trailer: {
       type: DataTypes.STRING(500),
-      allowNull: false,
-      unique: true,
-       
+      allowNull: true,
+      defaultValue: "",
+      unique: false,
     },
     poster_url: {
       type: DataTypes.STRING(500),
       allowNull: false,
     },
   },
-
 
   {
     sequelize,
@@ -54,7 +53,6 @@ Movie.init(
     underscored: true,
     modelName: "movie",
   }
-
 );
 
 module.exports = Movie;
