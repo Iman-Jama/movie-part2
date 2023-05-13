@@ -141,7 +141,7 @@ router.post("/film", async (req, res) => {
                   description: description,
                   poster_URL: posterURL,
                   rating: rating,
-                  trailer: trailer,
+                  // trailer: trailer,
                   runtime: runtime,
                 });
               });
