@@ -1,7 +1,7 @@
 const app = require("../server.js");
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
-
+const { User, Movie } = require("../models");
 const { routes, response } = require("../server.js");
 
 let isauthenticated = false;
@@ -94,14 +94,11 @@ router.post("/film", async (req, res) => {
           })
           .then(function (data) {
             // Get Movie Title, Genre, Plot, Rating and Runtime from the fetch response
-            // console.log(data);
             movieName = data.original_title;
             var genre = data.genres[0].name;
             var description = data.overview;
-            console.log("https://image.tmdb.org/t/p/w500" + data.poster_path);
             var posterURL =
               "https://image.tmdb.org/t/p/w500" + data.poster_path;
-
             var rating = Math.round(data.popularity);
             var runtime = data.runtime;
 
@@ -112,10 +109,43 @@ router.post("/film", async (req, res) => {
               .then(function (response) {
                 return response.json();
               })
+
               .then(function (data) {
                 // var { videoId } = data.items[0].id;
 
+<<<<<<< HEAD
                 // var trailer = "https://www.youtube.com/embed/" + videoId;
+=======
+                var trailer = "https://www.youtube.com/embed/" + videoId;
+
+              .then(async function (data) {
+                // var { videoId } = data.items[0].id;
+
+                // var trailer = "https://www.youtube.com/embed/" + videoId;
+
+                var movieData = {
+                  movie_name: movieName,
+                  imdb_id: imdbIDKey,
+                  runtime: runtime,
+                  description: description,
+                  genre: genre,
+                  poster_url: posterURL,
+                  rating: rating,
+                  runtime: runtime,
+                  // trailer: trailer,
+                };
+
+                try {
+                  // add movie to database
+                  const newMovie = await Movie.create(movieData);
+                  console.log("Movie added successfully!");
+                } catch (err) {
+                  console.log(err);
+                  console.log("Movie not added.");
+                }
+
+
+>>>>>>> ac811973a5e7d4c2da8246646531718ad5c0df50
                 return res.render("film", {
                   movieName: movieName,
                   genre: genre,
@@ -128,7 +158,6 @@ router.post("/film", async (req, res) => {
                 });
               });
           });
-
         // show status code 500 if no movie found in API database
       } else {
         res.status(500).send("Server error");

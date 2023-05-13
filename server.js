@@ -42,6 +42,7 @@ app.use(passport.session());
 app.use(require("./controllers/all-routes"));
 app.use(require("./controllers/register-routes"));
 app.use(require("./controllers/login-routes"));
+app.use("/api", require("./controllers/api/movies"));
 
 // Connects to DB & starts the server to begin listening
 sequelize.sync({ force: false }).then(() => {
