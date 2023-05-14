@@ -7,9 +7,9 @@
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
   <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
-<body class="bg-black min-h-0" x-data="{ dropdownOpen: false }">
+<body class="bg-black min-h-screen" x-data="{ dropdownOpen: false }">
 
-  <div id="main-div" class="min-h-full flex-column justify-space-around mx-20 my-20 bg-amber-400 rounded-3xl">   
+  <div id="main-div" class="min-h-full flex-column justify-space-around mx-20 my-20 bg-amber-400 rounded-3xl min-h-screen">   
 
     <nav class="shadow-lg bg-rose-900 rounded-t-2xl">
       <div class="max-w-6xl mx-auto px-4 flex justify-between items-center py-4">
@@ -19,12 +19,12 @@
           </a>
         </div>
         <div class="text-orange-50 text-3xl font-bold ml-36">
-          <a href="/" class="cursor-pointer hover:text-emerald-500">The Sequel</a>
+          <h1>The Sequel</h1>
         </div>
         <div class="flex space-x-4">
           {{#if isauthenticated}}
             <div class="relative">
-              <button type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" @click="dropdownOpen = !dropdownOpen" id="user-menu-button">
+              <button type="button" class="flex ml-20 mr-10 pr-8 text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" @click="dropdownOpen = !dropdownOpen" id="user-menu-button">
                 <span class="sr-only">Open user menu</span>
                 <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo">
               </button>
@@ -54,7 +54,7 @@
 
     <header class="display-flex justify-space-between align-center p-2"></header>
 
-    <main class="container container-fluid mt-5">
+    <main class="container container-fluid mt-5 min-h-screen">
       {{{ body }}}
     </main>
 

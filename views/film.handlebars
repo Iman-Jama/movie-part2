@@ -3,10 +3,12 @@
     <h1 class="w-1/2 mx-auto text-center"> {{ movieName }} </h1>
 </div>
 
+
 <form action="/filmadded" method="POST" class="mx-auto w-1/2">
     <input type="hidden" name="movieName" value="{{movieName}}">
     <button type="submit">Add to watchlist</button>
 </form>
+
 
 <div id="poster-div" class="bg-amber-400 flex justify-center items-center h-100 mb-2">
     <img src="{{poster_URL}}"" class="block rounded-lg lg:w-80" alt="poster"/>
@@ -42,6 +44,18 @@
         allowfullscreen id="trailer"></iframe>
 </div>
 
+
+<div class="">
+    <div class="bg-red-400 flex justify-center">
+        <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your review</label>
+    </div>
+    <div class="bg-green-400 w-1/2 flex justify-center">
+        <textarea id="message" rows="4" class=" block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave a review"></textarea>  
+    </div>
+    <div class="bg-blue-400 flex justify-center">        
+        <button type="submit" class="">Submit</button>
+    </div>  
+</div>
 
 <div id="reviews" class="bg-pink-500 flex justify-center items-center">
     <h2 class="block">Reviews</h2>
