@@ -7,6 +7,7 @@ const { routes, response } = require("../server.js");
 let isauthenticated = false;
 
 router.get("/", async (req, res) => {
+
   return res.render("home", { title: "page", isauthenticated: true });
 });
 
@@ -35,6 +36,7 @@ router.get("/register", async (req, res) => {
 router.get("/dashboard", ensureAuthenticated, async (req, res) => {
   return res.render("dashboard", { isauthenticated: true });
 });
+
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
@@ -109,6 +111,10 @@ router.post("/film", async (req, res) => {
                 return response.json();
               })
 
+                // var { videoId } = data.items[0].id;
+
+                var trailer = "https://www.youtube.com/embed/" + videoId;
+
               .then(async function (data) {
                 // var { videoId } = data.items[0].id;
 
@@ -135,6 +141,7 @@ router.post("/film", async (req, res) => {
                   console.log("Movie not added.");
                 }
 
+
                 return res.render("film", {
                   movieName: movieName,
                   genre: genre,
@@ -143,6 +150,7 @@ router.post("/film", async (req, res) => {
                   rating: rating,
                   // trailer: trailer,
                   runtime: runtime,
+                  isauthenticated: true // Pass the isauthenticated variable to the view
                 });
               });
           });
