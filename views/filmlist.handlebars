@@ -1,30 +1,27 @@
 <div class="flex justify-center bg-red-500 h-auto">
     <div class="flex flex-col items-center">
-        <h2 class="mb-8">
+        <h2 class="mb-20 mt-12 text-3xl">
             Watch list  
         </h2>
-
         <ul>
-            <li> 
-                Batman  
-                <button class="bg-sky-900 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-full">
-                    Seen
-                </button>
-                <button class="bg-sky-900 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-full">
-                    Remove
-                </button>
 
-            </li>
+        {{#each watchlistData as |movie|}}
 
-            <li> 
-                Eternel Sunshine of the Spotless Mind
-                <button class="bg-sky-900 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-full">
-                    Seen
-                </button>
-                <button class="bg-sky-900 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-full">
-                    Remove
-                </button>
-            </li>
+        <li class="mb-20 place-content-center">
+            <h3 class="text-center mb-5 text-xl"><strong>{{this.movie_name}}</strong></h3>
+            <div class="flex justify-between">
+                <img class="ml-10 h-64 " src="{{this.poster_url}}"/>
+                <p class="ml-10 mr-10 text-center mt-14">{{this.description}}</p>
+                <form action="/filmremoved" method="POST">
+                <input type="hidden" name="movie_name" value="{{this.movie_name}}">
+                    <button type="submit"
+                        class="mr-10 bg-amber-400 hover:bg-slate-400 text-black font-bold py-1 px-2 rounded-full h-10 mt-20">Remove</button>
+                </form>
+            </div>
+        </li>
+
+        {{/each}}
+
         </ul>
     </div>
 </div>

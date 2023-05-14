@@ -1,14 +1,18 @@
 
 <div class="flex justify-center items-center">
-    <h1 class="w-1/2 mx-auto text-center"> {{ movie_name }} </h1>
+    <h1 class="w-1/2 mx-auto text-center"> {{ movieName }} </h1>
 </div>
+
+
+<form action="/filmadded" method="POST" class="mx-auto w-1/2">
+    <input type="hidden" name="movieName" value="{{movieName}}">
+    <button type="submit">Add to watchlist</button>
+</form>
+
 
 <div id="poster-div" class="bg-amber-400 flex justify-center items-center h-100 mb-2">
     <img src="{{poster_URL}}"" class="block rounded-lg lg:w-80" alt="poster"/>
 </div>
-
-
-   
 
 <div class="flex justify-center items-center">
     <div class="flex">
