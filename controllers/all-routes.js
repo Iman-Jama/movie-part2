@@ -1,8 +1,10 @@
 const app = require("../server.js");
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
-const { User, Movie } = require("../models");
+const { User, Movie, Watchlist } = require("../models");
 const { routes, response } = require("../server.js");
+const passport = require("passport");
+const e = require("express");
 
 let isauthenticated = false;
 
@@ -24,10 +26,6 @@ router.post("/logout", (req, res) => {
   });
 });
 
-router.get("/filmlist", async (req, res) => {
-  return res.render("filmlist", { title: "filmlist" });
-});
-
 router.get("/register", async (req, res) => {
   return res.render("register", { title: "Register" });
 });
@@ -42,6 +40,107 @@ function ensureAuthenticated(req, res, next) {
   }
   res.redirect("/login");
 }
+
+// ADD TO WATCHLIST
+
+router.post("/filmadded", async (req, res) => {
+  res.locals.currentUser = req.user;
+  try {
+    // add movie to watchlist
+    var updateUsersMovie = await Watchlist.create({
+      user_id: req.user.user_id,
+      movie_name: req.body.movieName,
+    });
+    console.log("Movie added to watchlist successfully!");
+  } catch (err) {
+    console.log(err);
+    console.log("Movie not added to watchlist.");
+  }
+  return;
+});
+
+// VIEW WATCHLIST
+
+router.get("/filmlist", async (req, res) => {
+  // create variable to get current user
+
+  res.locals.currentUser = req.user;
+
+  // find all movies within the watchlist that match the current user's user_id
+
+  const watchlistMovies = await Watchlist.findAll({
+    where: {
+      user_id: req.user.user_id,
+    },
+  });
+
+  // serialise the data so it is in separate objects
+
+  var movieData = watchlistMovies.map((movie_name) =>
+    movie_name.get({ plain: true })
+  );
+
+  // fetch only the poster_url and description using the movie_names from the movie table
+  // promise.all ensures all the data is received before proceeding to return all the data together
+  Promise.all(
+    // serialise each object received from searching the movie table using the movie_name
+    movieData.map(async (item) => {
+      const movie = await Movie.findOne({
+        // request the poster_url and description where the movie_name is in the original watchlist array
+
+        attributes: ["poster_url", "description"],
+        where: {
+          movie_name: item.movie_name,
+        },
+      });
+      return {
+        movie_name: item.movie_name,
+        poster_url: movie.poster_url,
+        description: movie.description,
+      };
+    })
+  ).then((watchlistData) => {
+    return res.render("filmlist", {
+      title: "filmlist",
+      watchlistData,
+    });
+  });
+});
+
+router.post("/filmlist", (req, res) => {
+  res.locals.currentUser = req.user;
+  const watchlistMovie = Watchlist.findAll({
+    where: {
+      user_id: req.user.user_id,
+    },
+  });
+  console.log(watchlistMovie);
+  if (watchlistMovie == null) {
+    return res.render("filmlist", {
+      title: "filmlist",
+      movie_name: "No movies in database!",
+    });
+  } else {
+    return res.render("filmlist", {
+      title: "filmlist",
+      movie_name: watchlistMovie,
+    });
+  }
+});
+
+// // REMOVE FILM FROM WATCHLIST
+
+router.post("/filmremoved", async (req, res) => {
+  res.locals.currentUser = req.user;
+  Watchlist.destroy({
+    where: {
+      user_id: req.user.user_id,
+      movie_name: req.body.movie_name,
+    },
+  }).then(() => {
+    res.redirect("/filmlist");
+  });
+});
 
 // FETCH FILM DATA FROM APIS
 

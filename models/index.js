@@ -1,9 +1,23 @@
 const User = require("./User");
 const Movie = require("./Movies");
 const Review = require("./Review");
+const { move } = require("../controllers");
+const Watchlist = require("./Watchlist");
+
+User.hasMany(Watchlist, {
+  foreignKey: "user_id",
+});
+
+Movie.hasMany(Watchlist, {
+  foreignKey: "movie_name",
+});
 
 User.hasMany(Review, {
   as: "user_reviews",
+  foreignKey: "user_id",
+});
+
+Movie.belongsTo(User, {
   foreignKey: "user_id",
 });
 
@@ -20,4 +34,4 @@ Review.belongsTo(User, {
   foreignKey: "user_id",
 });
 
-module.exports = { User, Movie, Review };
+module.exports = { User, Movie, Review, Watchlist };

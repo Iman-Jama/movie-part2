@@ -44,6 +44,11 @@ Movie.init(
       type: DataTypes.STRING(500),
       allowNull: false,
     },
+    user_id: {
+      unique: true,
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   },
 
   {
