@@ -11,7 +11,7 @@
 
 
 <div id="poster-div" class="bg-amber-400 flex justify-center items-center h-100 mb-2">
-    <img src="{{poster_URL}}"" class="block rounded-lg lg:w-80" alt="poster"/>
+    <img src="{{poster_URL}}" class="block rounded-lg lg:w-80" alt="poster"/>
 </div>
 
 <div class="flex justify-center items-center">
@@ -25,6 +25,7 @@
         <div id="runtime" class="inline-block border-stone-200 p-1 border-b-2 m-1">
             <P>Runtime: {{runtime}} minutes</P>
         </div>
+       
     </div>
 </div>  
 
@@ -34,7 +35,13 @@
     <div id="Synopsis" class="w-1/2 mx-auto text-center mt-3">
         <p>{{ description }}
         </p>
+        {{#if reviews}}
+    <div id="reviews" class="inline-block border-stone-200 p-1 border-b-2 m-1">
+            <P>Reviews:<br>{{reviews}}</P>
     </div>
+    {{/if}}
+    </div>
+    
 
 </div>
 
@@ -49,13 +56,17 @@
     <div class="bg-red-400 flex justify-center">
         <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your review</label>
     </div>
-    <div class="bg-green-400 w-1/2 flex justify-center">
-        <textarea id="message" rows="4" class=" block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave a review"></textarea>  
+<div class="bg-gray-200 p-4">
+  <h2 class="text-lg font-medium mb-4">Leave a Review</h2>
+  <form action="/reviews" method="POST">
+    <div class="mb-4">
+      <label for="review" class="block font-medium text-gray-700 mb-2">Review</label>
+      <textarea id="review_text" name="review_text" class="border border-gray-400 p-2 rounded-lg w-full"></textarea>
     </div>
-    <div class="bg-blue-400 flex justify-center">        
-        <button type="submit" class="">Submit</button>
-    </div>  
+    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Submit</button>
+  </form>
 </div>
+
 
 <div id="reviews" class="bg-pink-500 flex justify-center items-center">
     <h2 class="block">Reviews</h2>
