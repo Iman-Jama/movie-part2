@@ -5,13 +5,8 @@
 
 {{>add-remove}}
 
-<form action="/filmadded" method="POST" class="mx-auto w-1/2">
-    <input type="hidden" name="movieName" value="{{movieName}}">
-    <button type="submit">Add to watchlist</button>
-</form>
 
-
-<div id="poster-div" class="bg-amber-400 flex justify-center items-center h-100 mb-2">
+<div id="poster-div" class="bg-zinc-200 flex justify-center items-center h-100 mb-2">
     <img src="{{poster_URL}}" class="block rounded-lg lg:w-80" alt="poster"/>
 </div>
 
