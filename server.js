@@ -3,6 +3,7 @@ const exphbs = require("express-handlebars");
 const path = require("path");
 const sequelize = require("./config/connection");
 const hbs = exphbs.create({});
+const helpers = require('./utils/helpers')
 
 const passport = require("passport");
 const session = require("express-session");
@@ -18,6 +19,8 @@ const PORT = process.env.PORT || 3008;
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
+
+
 
 // Set Handlebars as the default template engine.
 app.engine("handlebars", hbs.engine);
