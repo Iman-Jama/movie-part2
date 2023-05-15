@@ -49,6 +49,7 @@ Movie.init(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    
   },
 
   {
