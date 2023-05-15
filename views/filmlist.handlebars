@@ -1,27 +1,22 @@
-<div class="flex justify-center bg-red-500 h-auto">
+<div class="flex justify-center bg-zinc-200 h-auto">
     <div class="flex flex-col items-center">
         <h2 class="mb-20 mt-12 text-3xl">
-            Watch list  
+            Watch list
         </h2>
         <ul>
-
-        {{#each watchlistData as |movie|}}
-
-        <li class="mb-20 place-content-center">
-            <h3 class="text-center mb-5 text-xl"><strong>{{this.movie_name}}</strong></h3>
-            <div class="flex justify-between">
-                <img class="ml-10 h-64 " src="{{this.poster_url}}"/>
-                <p class="ml-10 mr-10 text-center mt-14">{{this.description}}</p>
-                <form action="/filmremoved" method="POST">
-                <input type="hidden" name="movie_name" value="{{this.movie_name}}">
-                    <button type="submit"
-                        class="mr-10 bg-amber-400 hover:bg-slate-400 text-black font-bold py-1 px-2 rounded-full h-10 mt-20">Remove</button>
-                </form>
-            </div>
-        </li>
-
-        {{/each}}
-
+            {{#each watchlistData as |movie|}}
+            <li class="mb-20 p place-content-center border-b border-gray-300 pb-5">
+                <h3 class="text-center mb-5 text-xl"><strong>{{this.movie_name}}</strong></h3>
+                <div class="flex justify-between mb-10">
+                    <img class="ml-10 h-64 mb-5" src="{{this.poster_url}}" />
+                    <p class="ml-10 mr-10 text-center mt-14">{{this.description}}</p>
+                    <form action="/filmremoved" method="POST">
+                        <input type="hidden" name="movie_name" value="{{this.movie_name}}">
+                        <button type="submit" class="mr-10 bg-amber-400 hover:bg-slate-400 text-black font-bold py-1 px-2 rounded-full h-10 mt-20">Remove</button>
+                    </form>
+                </div>
+            </li>
+            {{/each}}
         </ul>
     </div>
 </div>

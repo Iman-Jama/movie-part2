@@ -8,13 +8,10 @@ const e = require("express");
 
 let isauthenticated = false;
 
+
 router.get("/", async (req, res) => {
-
-  return res.render("home", { title: "page", isauthenticated: true });
-});
-
-router.get("/user/:num", async (req, res) => {
-  return res.render("user", users[req.params.num - 1]);
+  const isauthenticated = req.isAuthenticated();
+  return res.render("home", { title: "page", isauthenticated });
 });
 
 router.get("/login", async (req, res) => {
@@ -65,11 +62,12 @@ router.post("/filmadded", async (req, res) => {
 
 router.get("/filmlist", async (req, res) => {
   // create variable to get current user
-
   res.locals.currentUser = req.user;
 
-  // find all movies within the watchlist that match the current user's user_id
+  // Check if the user is authenticated
+  const isAuthenticated = req.isAuthenticated();
 
+  // find all movies within the watchlist that match the current user's user_id
   const watchlistMovies = await Watchlist.findAll({
     where: {
       user_id: req.user.user_id,
@@ -77,7 +75,6 @@ router.get("/filmlist", async (req, res) => {
   });
 
   // serialise the data so it is in separate objects
-
   var movieData = watchlistMovies.map((movie_name) =>
     movie_name.get({ plain: true })
   );
@@ -89,7 +86,6 @@ router.get("/filmlist", async (req, res) => {
     movieData.map(async (item) => {
       const movie = await Movie.findOne({
         // request the poster_url and description where the movie_name is in the original watchlist array
-
         attributes: ["poster_url", "description"],
         where: {
           movie_name: item.movie_name,
@@ -102,9 +98,11 @@ router.get("/filmlist", async (req, res) => {
       };
     })
   ).then((watchlistData) => {
+    // Pass the isAuthenticated variable to the template
     return res.render("filmlist", {
       title: "filmlist",
       watchlistData,
+      isauthenticated: isAuthenticated,
     });
   });
 });
@@ -213,8 +211,10 @@ router.post("/film", async (req, res) => {
               })
 
                 // var { videoId } = data.items[0].id;
-// var trailer = "https://www.youtube.com/embed/" + videoId;
-                
+
+
+                // var trailer = "https://www.youtube.com/embed/" + videoId;
+
               .then(async function (data) {
                 // var { videoId } = data.items[0].id;
 
