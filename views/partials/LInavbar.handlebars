@@ -1,0 +1,41 @@
+<nav class="shadow-lg bg-rose-900 rounded-t-2xl">
+      <div class="max-w-6xl mx-auto px-4 flex justify-between items-center py-4">
+        <div class="flex items-center">
+          <a href="#" class="flex items-center">
+            <img src="" alt="Logo" class="h-8 w-8 mr-2" />
+          </a>
+        </div>
+        <div class="text-orange-50 text-3xl font-bold ml-36">
+          <a href="/" class="cursor-pointer hover:text-emerald-500">The Sequel</a>
+        </div>
+        <div class="flex space-x-4">
+          {{#if isauthenticated}}
+            <div class="relative">
+                <div class="ml-20 mr-10 pr-10">
+                  <button type="button" class="flex text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" @click="dropdownOpen = !dropdownOpen" id="user-menu-button">
+                    <span class="sr-only">Open user menu</span>
+                    <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo">
+                  </button>
+                </div>
+              <div x-show="dropdownOpen" @click.away="dropdownOpen = false" class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-lg z-10">
+                <a href="/dashboard" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Dashboard</a>
+                <form action="/logout" method="POST" class="block">
+                  <button type="submit" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Sign Out</button>
+                </form>
+              </div>
+            </div>
+          {{else}}
+            <a href="/login">
+              <button class="text-yellow-50 py-2 px-4 rounded hover:text-emerald-500">
+                Sign In
+              </button>
+            </a>
+            <a href="/register">
+              <button class="text-orange-50 py-2 px-4 rounded hover:text-emerald-500">
+                Sign Up
+              </button>
+            </a>
+          {{/if}}
+        </div>
+      </div>
+    </nav>

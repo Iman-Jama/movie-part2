@@ -26,6 +26,7 @@
     "express-flash": "^0.0.2",
     "express-handlebars": "^7.0.7",
     "express-session": "^1.17.3",
+    "express-static": "^1.2.6",
     "handlebars": "^4.7.7",
     "mysql2": "^3.2.4",
     "passport": "^0.6.0",

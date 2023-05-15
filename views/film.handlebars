@@ -1,28 +1,23 @@
 
 <div class="flex justify-center items-center">
-    <h1 class="w-1/2 mx-auto text-center"> {{ movieName }} </h1>
+    <h1 class="w-1/2 mx-auto text-2xl text-center font-bold"> {{ movieName }} </h1>
 </div>
 
+{{>add-remove}}
 
-<form action="/filmadded" method="POST" class="mx-auto w-1/2">
-    <input type="hidden" name="movieName" value="{{movieName}}">
-    <button type="submit">Add to watchlist</button>
-</form>
-
-
-<div id="poster-div" class="bg-amber-400 flex justify-center items-center h-100 mb-2">
+<div id="poster-div" class="bg-zinc-200 flex justify-center items-center h-100 mb-2">
     <img src="{{poster_URL}}"" class="block rounded-lg lg:w-80" alt="poster"/>
 </div>
 
 <div class="flex justify-center items-center">
     <div class="flex">
-        <div id="Genre" class="inline-block border-stone-200 border-b-2 p-1 m-1">
+        <div id="Genre" class="inline-block border-rose-900 border-b-2 p-1 m-1 font-medium">
             <p>Genre: {{genre}}</p>
         </div>
-        <div id="rating" class="inline-block border-stone-200 p-1 border-b-2 m-1">
+        <div id="rating" class="inline-block border-rose-900 p-1 border-b-2 m-1 font-medium">
             <P>Rating: {{rating}}%</P>
         </div>   
-        <div id="runtime" class="inline-block border-stone-200 p-1 border-b-2 m-1">
+        <div id="runtime" class="inline-block border-rose-900 p-1 border-b-2 m-1 font-medium">
             <P>Runtime: {{runtime}} minutes</P>
         </div>
     </div>
@@ -31,7 +26,7 @@
 
 <div class="flex justify-center items-center">
 
-    <div id="Synopsis" class="w-1/2 mx-auto text-center mt-3">
+    <div id="Synopsis" class="w-1/2 mx-auto text-center mt-3 font-medium">
         <p>{{ description }}
         </p>
     </div>

@@ -9,8 +9,8 @@ const e = require("express");
 let isauthenticated = false;
 
 router.get("/", async (req, res) => {
-
-  return res.render("home", { title: "page", isauthenticated: true });
+  const isauthenticated = req.isAuthenticated();
+  return res.render("home", { title: "page", isauthenticated });
 });
 
 router.get("/user/:num", async (req, res) => {
@@ -208,11 +208,12 @@ router.post("/film", async (req, res) => {
             )
               .then(function (response) {
                 return response.json();
+               
               })
 
                 // var { videoId } = data.items[0].id;
-
-                var trailer = "https://www.youtube.com/embed/" + videoId;
+                // var trailer = "https://www.youtube.com/embed/" + videoId;
+              
 
               .then(async function (data) {
                 // var { videoId } = data.items[0].id;
