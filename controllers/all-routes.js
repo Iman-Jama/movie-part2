@@ -26,7 +26,8 @@ router.get("/dashboard", isAuthenticated, async (req, res) => {
   return res.render("dashboard", { isauthenticated: true });
 });
 
-function isAuthenticated(req, res, next) {
+
+function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
@@ -206,10 +207,7 @@ router.post("/film", async (req, res) => {
               // var trailer = "https://www.youtube.com/embed/" + videoId;
 
               .then(async function (data) {
-                // var { videoId } = data.items[0].id;
 
-                // var trailer = "https://www.youtube.com/embed/" + videoId;
-                // var trailer = "https://www.youtube.com/embed/" + videoId;
                 var movieData = {
                   movie_name: movieName,
                   imdb_id: imdbIDKey,
@@ -228,7 +226,10 @@ router.post("/film", async (req, res) => {
                   // add movie to database
                   // search for movie in database based on imdb_id
                   const existingMovie = await Movie.findOne({
-                    imdb_id: movieData.imdb_id,
+
+
+                    imdb_id: imdbIDKey,
+
                   });
 
                   if (existingMovie) {
@@ -241,7 +242,9 @@ router.post("/film", async (req, res) => {
 
                   // search for associated reviews
                   const filmReviews = await Review.findAll({
-                    where: { imdb_id: movieData.imdb_id },
+
+                    where: { imdb_id: imdbIDKey },
+
                     attributes: ["review_text"],
                   });
 
@@ -267,6 +270,7 @@ router.post("/film", async (req, res) => {
                   // trailer: trailer,
                   runtime: runtime,
                   reviews: reviews,
+                  imdb_id: imdbIDKey,
                   isauthenticated: true, // Pass the isauthenticated variable to the view
                 });
               });
@@ -280,9 +284,11 @@ router.post("/film", async (req, res) => {
 
 // POST route for handling review form submission
 router.post("/reviews", async (req, res) => {
+  res.locals.currentUser = req.user;
   try {
     const reviewText = req.body.review_text;
     const imdbId = req.body.imdb_id;
+
     console.log(imdbId);
 
     const movie = await Movie.findOne({ where: { imdb_id: imdbId } });
@@ -292,8 +298,10 @@ router.post("/reviews", async (req, res) => {
     }
 
     const newReview = await Review.create({
-      imdb_id: movie.imdb_id,
+      imdb_id: imdbId,
       review_text: reviewText,
+      user_id: req.user.user_id,
+
     });
 
     return res.status(201).json({ message: "Review added successfully" });
