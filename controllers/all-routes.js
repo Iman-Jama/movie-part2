@@ -1,13 +1,7 @@
-const app = require("../server.js");
 const router = require("express").Router();
-const bcrypt = require("bcrypt");
-const { User, Movie, Watchlist, Review } = require("../models");
-const { routes, response } = require("../server.js");
-const passport = require("passport");
-const e = require("express");
+const { Movie, Watchlist, Review } = require("../models");
 
 let isauthenticated = false;
-
 
 router.get("/", async (req, res) => {
   const isauthenticated = req.isAuthenticated();
@@ -28,12 +22,11 @@ router.get("/register", async (req, res) => {
   return res.render("register", { title: "Register" });
 });
 
-router.get("/dashboard", ensureAuthenticated, async (req, res) => {
+router.get("/dashboard", isAuthenticated, async (req, res) => {
   return res.render("dashboard", { isauthenticated: true });
 });
 
-
-function ensureAuthenticated(req, res, next) {
+function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
@@ -199,8 +192,6 @@ router.post("/film", async (req, res) => {
               "https://image.tmdb.org/t/p/w500" + data.poster_path;
             var rating = Math.round(data.popularity);
             var runtime = data.runtime;
-           
-            
 
             fetch(
               "https://www.googleapis.com/youtube/v3/search?key=AIzaSyCwgbAu1Gc2IwjwgERI4QF7O9pogMLMmo4&type=video&part=snippet&maxResults=1&q=movie%20trailer%20" +
@@ -210,15 +201,13 @@ router.post("/film", async (req, res) => {
                 return response.json();
               })
 
-                // var { videoId } = data.items[0].id;
+              // var { videoId } = data.items[0].id;
 
-
-                // var trailer = "https://www.youtube.com/embed/" + videoId;
+              // var trailer = "https://www.youtube.com/embed/" + videoId;
 
               .then(async function (data) {
                 // var { videoId } = data.items[0].id;
 
-                
                 // var trailer = "https://www.youtube.com/embed/" + videoId;
                 // var trailer = "https://www.youtube.com/embed/" + videoId;
                 var movieData = {
@@ -237,31 +226,34 @@ router.post("/film", async (req, res) => {
 
                 try {
                   // add movie to database
-                      // search for movie in database based on imdb_id
-                      const existingMovie = await Movie.findOne({ imdb_id: movieData.imdb_id });
+                  // search for movie in database based on imdb_id
+                  const existingMovie = await Movie.findOne({
+                    imdb_id: movieData.imdb_id,
+                  });
 
-                      if (existingMovie) {
-                        console.log("Movie already exists in the database!");
-                      } else {
-                        // add movie to database
-                        const newMovie = await Movie.create(movieData);
-                        console.log("Movie added successfully!");
-                        }
-                  
-                        // search for associated reviews
-                        const filmReviews = await Review.findAll({
-                          where: { imdb_id: movieData.imdb_id },
-                          attributes: ["review_text"]
-                        });
-                      
-                      reviews = filmReviews.map(review => review.dataValues.review_text);
-                    // associate reviews with new movie
-                    console.log(reviews);
+                  if (existingMovie) {
+                    console.log("Movie already exists in the database!");
+                  } else {
+                    // add movie to database
+                    const newMovie = await Movie.create(movieData);
+                    console.log("Movie added successfully!");
+                  }
 
-                    console.log("Movie added successfully with associated reviews!");
-                   
-              
-                
+                  // search for associated reviews
+                  const filmReviews = await Review.findAll({
+                    where: { imdb_id: movieData.imdb_id },
+                    attributes: ["review_text"],
+                  });
+
+                  reviews = filmReviews.map(
+                    (review) => review.dataValues.review_text
+                  );
+                  // associate reviews with new movie
+                  console.log(reviews);
+
+                  console.log(
+                    "Movie added successfully with associated reviews!"
+                  );
                 } catch (err) {
                   console.log(err);
                   console.log("Movie not added.");
@@ -275,9 +267,8 @@ router.post("/film", async (req, res) => {
                   // trailer: trailer,
                   runtime: runtime,
                   reviews: reviews,
-                  isauthenticated: true // Pass the isauthenticated variable to the view
+                  isauthenticated: true, // Pass the isauthenticated variable to the view
                 });
-               
               });
           });
         // show status code 500 if no movie found in API database
@@ -288,30 +279,28 @@ router.post("/film", async (req, res) => {
 });
 
 // POST route for handling review form submission
-router.post('/reviews', async (req, res) => {
+router.post("/reviews", async (req, res) => {
   try {
     const reviewText = req.body.review_text;
     const imdbId = req.body.imdb_id;
-    console.log(imdbId)
+    console.log(imdbId);
 
     const movie = await Movie.findOne({ where: { imdb_id: imdbId } });
 
     if (!movie) {
-      return res.status(404).json({ error: 'Movie not found' });
+      return res.status(404).json({ error: "Movie not found" });
     }
 
     const newReview = await Review.create({
       imdb_id: movie.imdb_id,
-      review_text: reviewText
+      review_text: reviewText,
     });
 
-    return res.status(201).json({ message: 'Review added successfully' });
+    return res.status(201).json({ message: "Review added successfully" });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ error: 'Server error' });
+    return res.status(500).json({ error: "Server error" });
   }
 });
-
-
 
 module.exports = router;
