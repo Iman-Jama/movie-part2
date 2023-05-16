@@ -5,6 +5,7 @@ const { Watchlist } = require("../models");
 // ADD TO WATCHLIST
 router.post("/filmadded", async (req, res) => {
   res.locals.currentUser = req.user;
+  console.log("This is the log to check:", req.body.movieName);
   try {
     // add movie to watchlist
     const createdWatchlist = await Watchlist.create({
@@ -243,10 +244,7 @@ router.post("/film", async (req, res) => {
                     }
                   );
 
-                  console.log(
-                    "Search history stored successfully!",
-                    newSearchHistory
-                  );
+                  console.log("Search history stored successfully!");
                 } catch (error) {
                   console.error("Error storing search history:", error);
                 }
