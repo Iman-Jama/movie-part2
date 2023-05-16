@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { Watchlist } = require("../models");
+const { Watchlist, Movie, Review, SearchHistory } = require("../models");
 
 // ADD TO WATCHLIST
 router.post("/filmadded", async (req, res) => {
   res.locals.currentUser = req.user;
-  console.log("This is the log to check:", req.body.movieName);
   try {
     // add movie to watchlist
     const createdWatchlist = await Watchlist.create({
@@ -188,6 +187,7 @@ router.post("/film", async (req, res) => {
                 };
 
                 let reviews = [];
+                console.log(imdbIDKey);
 
                 try {
                   // add movie to database
@@ -208,7 +208,7 @@ router.post("/film", async (req, res) => {
                   const filmReviews = await Review.findAll({
                     where: { imdb_id: imdbIDKey },
 
-                    attributes: ["review_text"],
+                    attributes: ["review_text", "review_id"],
                   });
 
                   reviews = filmReviews.map(
@@ -232,15 +232,21 @@ router.post("/film", async (req, res) => {
                   user_id: userID,
                   movieName: movieName,
                   search_date: new Date(),
+                  imdb_id: imdbIDKey,
+                  poster_url: posterURL,
                 };
-
-                console.log("SearchHistoryData:", searchHistoryData);
 
                 try {
                   const newSearchHistory = await SearchHistory.create(
                     searchHistoryData,
                     {
-                      fields: ["user_id", "movieName", "search_date"],
+                      fields: [
+                        "user_id",
+                        "movieName",
+                        "search_date",
+                        "imdb_id",
+                        "poster_url",
+                      ],
                     }
                   );
 
