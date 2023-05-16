@@ -2,6 +2,7 @@ const User = require("./User");
 const Movie = require("./Movies");
 const Review = require("./Review");
 const Watchlist = require("./Watchlist");
+const SearchHistory = require("./SearchHistory");
 
 User.hasMany(Watchlist, {
   foreignKey: "user_id",
@@ -33,4 +34,4 @@ Review.belongsTo(User, {
   foreignKey: "user_id",
 });
 
-module.exports = { User, Movie, Review, Watchlist };
+module.exports = { User, Movie, Review, Watchlist, SearchHistory };

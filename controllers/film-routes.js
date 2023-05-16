@@ -1,75 +1,13 @@
-const router = require("express").Router();
-const { Movie, Watchlist, Review, SearchHistory } = require("../models");
-
-router.get("/", async (req, res) => {
-  try {
-    // Checks if the user is authenticated
-    const loggedIn = req.isAuthenticated();
-
-    // Renders the home page with loggedIn status
-    res.render("home", { loggedIn });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Server error" });
-  }
-});
-
-router.get("/user/:num", async (req, res) => {
-  return res.render("user", Users[req.params.num - 1]);
-});
-
-router.get("/login", async (req, res) => {
-  if (req.isAuthenticated()) {
-    return res.redirect("/dashboard");
-  }
-
-  return res.render("login", { title: "login" });
-});
-
-router.get("/logout", function (req, res, next) {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("/");
-  });
-});
-
-router.get("/dashboard", async (req, res) => {
-  if (!req.isAuthenticated()) {
-    return res.redirect("/login");
-  }
-
-  try {
-    // Fetch the recently searched movies from the database
-    const recentlySearchedMovies = await Movie.findAll({
-      order: [["created_at", "DESC"]],
-      limit: 5,
-    });
-
-    const username = req.user.username;
-    const userID = req.user.user_id;
-
-    // Render the dashboard page and pass the recently searched movies and username to the view
-    res.render("dashboard", {
-      recentlySearchedMovies,
-      username,
-      userID,
-      isauthenticated: true,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Server error" });
-  }
-});
+const express = require("express");
+const router = express.Router();
+const { Watchlist } = require("../models");
 
 // ADD TO WATCHLIST
-
 router.post("/filmadded", async (req, res) => {
   res.locals.currentUser = req.user;
   try {
     // add movie to watchlist
-    var updateUsersMovie = await Watchlist.create({
+    const createdWatchlist = await Watchlist.create({
       user_id: req.user.user_id,
       movie_name: req.body.movieName,
     });
@@ -292,8 +230,6 @@ router.post("/film", async (req, res) => {
                 const searchHistoryData = {
                   user_id: userID,
                   movieName: movieName,
-                  imdb_id: imdbIDKey,
-                  poster_url: posterURL,
                   search_date: new Date(),
                 };
 
@@ -303,13 +239,7 @@ router.post("/film", async (req, res) => {
                   const newSearchHistory = await SearchHistory.create(
                     searchHistoryData,
                     {
-                      fields: [
-                        "user_id",
-                        "movieName",
-                        "imdb_id",
-                        "poster_url",
-                        "search_date",
-                      ],
+                      fields: ["user_id", "movieName", "search_date"],
                     }
                   );
 

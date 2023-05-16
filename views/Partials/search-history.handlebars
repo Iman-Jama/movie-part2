@@ -1,0 +1,63 @@
+<div id="search-history">
+  <h2>Recently Searched Movies:</h2>
+  <div class="grid grid-cols-4 gap-4">
+    {{#each searchHistory}}
+    <a href="/movie/{{this.id}}" class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <img src="{{this.poster_url}}" alt="{{this.movieName}}" class="w-full h-32 object-cover">
+      <div class="p-2">
+        <p class="text-base font-semibold">{{this.movieName}}</p>
+      </div>
+    </a>
+    {{/each}}
+  </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(() => {
+    loadSearchHistory();
+  });
+
+  function loadSearchHistory() {
+    $.ajax({
+      url: "/search-history",
+      method: "GET",
+      success: function (response) {
+        displaySearchHistory(response);
+      },
+      error: function (error) {
+        console.error("Error retrieving search history:", error);
+      },
+    });
+  }
+
+  function displaySearchHistory(searchHistory) {
+    const searchHistoryContainer = $("#search-history");
+    searchHistoryContainer.empty();
+
+    const gridContainer = $("<div>").addClass("grid grid-cols-2 gap-4");
+    searchHistoryContainer.append(gridContainer);
+
+    searchHistory.forEach((entry) => {
+      const cardLink = $("<a>")
+        .attr("href", "/movie/" + entry.id)
+        .addClass("bg-white shadow-lg rounded-lg overflow-hidden");
+      gridContainer.append(cardLink);
+
+      const cardImage = $("<img>")
+        .attr("src", entry.poster_url)
+        .attr("alt", entry.movieName)
+        .addClass("w-full h-40 object-cover");
+      cardLink.append(cardImage);
+
+      const cardContent = $("<div>").addClass("p-4");
+      cardLink.append(cardContent);
+
+      const cardTitle = $("<p>")
+        .addClass("text-xl font-bold")
+        .text(entry.movieName);
+      cardContent.append(cardTitle);
+    });
+  }
+</script>
