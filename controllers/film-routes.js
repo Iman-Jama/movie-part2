@@ -7,16 +7,30 @@ router.post("/filmadded", async (req, res) => {
   res.locals.currentUser = req.user;
   try {
     // add movie to watchlist
-    const createdWatchlist = await Watchlist.create({
-      user_id: req.user.user_id,
-      movie_name: req.body.movieName,
+    // check if in watchlist then create
+    const existingMovie = await Watchlist.findOne({
+      where: {
+        movie_name: req.body.movieName,
+      },
     });
-    console.log("Movie added to watchlist successfully!");
+    if (existingMovie) {
+      console.log("Movie already exists in watchlist");
+      return res.redirect("/dashboard");
+    } else {
+      const createdWatchlist = await Watchlist.create({
+        user_id: req.user.user_id,
+        movie_name: req.body.movieName,
+      });
+      console.log("Movie added to watchlist successfully!");
+    }
+
+    var movieName = req.body.movieName;
+    return res.redirect("/dashboard");
   } catch (err) {
     console.log(err);
     console.log("Movie not added to watchlist.");
+    res.status(404).json(err);
   }
-  return;
 });
 
 // VIEW WATCHLIST
@@ -106,6 +120,7 @@ router.post("/filmremoved", async (req, res) => {
 // FETCH FILM DATA FROM APIS
 
 router.post("/film", async (req, res) => {
+  console.log(req);
   var { movieName } = req.body;
 
   const options = {
@@ -211,8 +226,6 @@ router.post("/film", async (req, res) => {
 
                     attributes: ["review_text", "review_id"],
                   });
-
-                  console.log(filmReviews);
 
                   reviews = filmReviews.map(
                     (review) => review.dataValues.review_text
