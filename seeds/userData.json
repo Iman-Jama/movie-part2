@@ -1,25 +1,25 @@
 [
     {
         "user_id": "1",
-        "name": "Faith",
+        "username": "Faith",
         "email": "faith@gmail.com",
         "password":"pass"
     },
     {
         "user_id": "2",
-        "name": "Iman",
+        "username": "Iman",
         "email": "iman@gmail.com",
         "password":"pass"
     },
     {
         "user_id": "3",
-        "name": "Aaron",
+        "username": "Aaron",
         "email": "aaron@gmail.com",
         "password":"pass"
     },
     {
         "user_id": "4",
-        "name": "Leesa",
+        "username": "Leesa",
         "email": "leesa@gmail.com",
         "password":"pass"
     }
