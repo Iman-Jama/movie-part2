@@ -14,13 +14,5 @@
       </div>  
     </form>
   </div>
-
-<div id="search-history">
-  <h2>Recently Searched Movies:</h2>
-  <ul>
-    {{#each recentlySearchedMovies}}
-    <li>{{title}} - {{year}}</li>
-    {{/each}}
-  </ul>
-</div>
-</div>
+  
+{{> search-history searchHistory=searchHistory}}
