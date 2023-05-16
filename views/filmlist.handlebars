@@ -6,13 +6,15 @@
         <ul>
             {{#each watchlistData as |movie|}}
             <li class="mb-20 p place-content-center border-b border-gray-300 pb-5">
-                <h3 class="text-center mb-5 text-xl"><strong>{{this.movie_name}}</strong></h3>
-                <div class="flex justify-between mb-10">
-                    <img class="ml-10 h-64 mb-5" src="{{this.poster_url}}" />
-                    <p class="ml-10 mr-10 text-center mt-14">{{this.description}}</p>
-                    <form action="/filmremoved" method="POST">
+                <h3 class="text-center mb-5 ml-10 md:mr-10 text-xl"><strong>{{this.movie_name}}</strong></h3>
+                <div class="flex flex-col md:flex-row items-center md:justify-between mb-10">
+                    <div class="flex items-center">
+                        <img class="ml-10 mb-5 h-64" src="{{this.poster_url}}" />
+                        <p class="ml-10 mr-10 text-center mt-14 md:mt-0 md:text-left hidden md:block">{{this.description}}</p>
+                    </div>
+                    <form action="/filmremoved" method="POST" class="mt-4 ml-10 md:mr-10 md:mt-0">
                         <input type="hidden" name="movie_name" value="{{this.movie_name}}">
-                        <button type="submit" class="mr-10 bg-amber-400 hover:bg-slate-400 text-black font-bold py-1 px-2 rounded-full h-10 mt-20">Remove</button>
+                        <button type="submit" class="mt-4 md:mt-0 bg-amber-400 hover:bg-slate-400 text-black font-bold py-1 px-2 rounded-full h-10">Remove</button>
                     </form>
                 </div>
             </li>

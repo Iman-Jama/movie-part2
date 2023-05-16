@@ -1,13 +1,6 @@
-#form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-
-
-
-
+.custom-sm-height {
+    width: 70px;
+}
 
 
 
