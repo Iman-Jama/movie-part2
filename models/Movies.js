@@ -49,7 +49,12 @@ Movie.init(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    
+    createdAt: {
+      // Update column name to 'createdAt'
+      type: DataTypes.DATE,
+      allowNull: false,
+      field: "created_at", // Specify the actual column name in the database
+    },
   },
 
   {

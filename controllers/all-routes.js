@@ -35,16 +35,22 @@ router.get("/logout", function (req, res, next) {
   });
 });
 
-router.get("/dashboard", async (req, res, next) => {
+router.get("/dashboard", async (req, res) => {
   if (!req.isAuthenticated()) {
     return res.redirect("/login");
   }
 
   try {
+    // Fetch the recently searched movies from the database
+    const recentlySearchedMovies = await Movie.findAll({
+      order: [["created_at", "DESC"]],
+      limit: 5,
+    });
+
     const username = req.user.username;
 
-    // Renders the dashboard page with username and loggedIn status
-    res.render("dashboard", { loggedIn: true, username });
+    // Render the dashboard page and pass the recently searched movies and username to the view
+    res.render("dashboard", { recentlySearchedMovies, username });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
