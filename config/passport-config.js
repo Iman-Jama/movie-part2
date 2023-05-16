@@ -6,21 +6,25 @@ const User = require("../models/User");
 passport.use(
   new LocalStrategy(
     {
-      usernameField: "email", // or whatever you're using as your username field
+      usernameField: "username", // Replace "email" with "username"
     },
-    async (email, password, done) => {
+    async (username, password, done) => {
       try {
-        const user = await User.findOne({ where: { email } });
+        const user = await User.findOne({ where: { username } }); // Replace "email" with "username"
         if (!user) {
-          console.log("Email not found:", email);
-          return done(null, false, { message: "Incorrect email or password" });
+          console.log("Username not found:", username); // Replace "Email" with "Username"
+          return done(null, false, {
+            message: "Incorrect username or password",
+          }); // Replace "Email" with "Username"
         }
         const isValidPassword = await bcrypt.compare(password, user.password);
         if (!isValidPassword) {
-          console.log("Invalid password for email:", email);
-          return done(null, false, { message: "Incorrect email or password" });
+          console.log("Invalid password for username:", username); // Replace "Email" with "Username"
+          return done(null, false, {
+            message: "Incorrect username or password",
+          }); // Replace "Email" with "Username"
         }
-        console.log("Successfully authenticated email:", email);
+        console.log("Successfully authenticated username:", username); // Replace "Email" with "Username"
         return done(null, user);
       } catch (error) {
         done(error);

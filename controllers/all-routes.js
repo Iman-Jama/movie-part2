@@ -1,10 +1,5 @@
-const app = require("../server.js");
 const router = require("express").Router();
-const bcrypt = require("bcrypt");
-const { User, Movie, Watchlist, Review } = require("../models");
-const { routes, response } = require("../server.js");
-const passport = require("passport");
-const e = require("express");
+const { Movie, Watchlist, Review } = require("../models");
 
 let isauthenticated = false;
 
@@ -27,9 +22,10 @@ router.get("/register", async (req, res) => {
   return res.render("register", { title: "Register" });
 });
 
-router.get("/dashboard", ensureAuthenticated, async (req, res) => {
+router.get("/dashboard", isAuthenticated, async (req, res) => {
   return res.render("dashboard", { isauthenticated: true });
 });
+
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
@@ -211,6 +207,7 @@ router.post("/film", async (req, res) => {
               // var trailer = "https://www.youtube.com/embed/" + videoId;
 
               .then(async function (data) {
+
                 var movieData = {
                   movie_name: movieName,
                   imdb_id: imdbIDKey,
@@ -229,7 +226,10 @@ router.post("/film", async (req, res) => {
                   // add movie to database
                   // search for movie in database based on imdb_id
                   const existingMovie = await Movie.findOne({
+
+
                     imdb_id: imdbIDKey,
+
                   });
 
                   if (existingMovie) {
@@ -242,7 +242,9 @@ router.post("/film", async (req, res) => {
 
                   // search for associated reviews
                   const filmReviews = await Review.findAll({
+
                     where: { imdb_id: imdbIDKey },
+
                     attributes: ["review_text"],
                   });
 
@@ -299,6 +301,7 @@ router.post("/reviews", async (req, res) => {
       imdb_id: imdbId,
       review_text: reviewText,
       user_id: req.user.user_id,
+
     });
 
     return res.status(201).json({ message: "Review added successfully" });
