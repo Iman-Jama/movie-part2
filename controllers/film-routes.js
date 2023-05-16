@@ -187,7 +187,7 @@ router.post("/film", async (req, res) => {
                 };
 
                 let reviews = [];
-
+                let reviewID = [];
                 try {
                   // add movie to database
                   // search for movie in database based on imdb_id
@@ -212,8 +212,14 @@ router.post("/film", async (req, res) => {
                     attributes: ["review_text", "review_id"],
                   });
 
+                  console.log(filmReviews);
+
                   reviews = filmReviews.map(
                     (review) => review.dataValues.review_text
+                  );
+
+                  reviewID = filmReviews.map(
+                    (review) => review.dataValues.review_id
                   );
                   // associate reviews with new movie
                   console.log(reviews);
@@ -265,6 +271,7 @@ router.post("/film", async (req, res) => {
                   // trailer: trailer,
                   runtime: runtime,
                   reviews: reviews,
+                  review_id: reviewID,
                   imdb_id: imdbIDKey,
                   isauthenticated: true, // Pass the isauthenticated variable to the view
                 });
