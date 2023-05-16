@@ -14,7 +14,7 @@
 
 [User Story](#user-story)
 
-[Authors](#authors)
+[Authors & Contact](#authors)
 
 [License](#license)
 

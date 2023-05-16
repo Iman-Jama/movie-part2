@@ -7,6 +7,7 @@ passport.use(
   new LocalStrategy(
     {
       usernameField: "username", // Replace "email" with "username"
+      passwordField: "password",
     },
     async (username, password, done) => {
       try {
@@ -33,11 +34,11 @@ passport.use(
   )
 );
 
-passport.serializeUser(function (user, done) {
+passport.serializeUser((user, done) => {
   done(null, user.user_id);
 });
 
-passport.deserializeUser(async function (user_id, done) {
+passport.deserializeUser(async (user_id, done) => {
   try {
     const user = await User.findByPk(user_id);
     if (!user) {

@@ -1,3 +1,4 @@
+<h1 class="text-3xl font-bold mb-4">Welcome, {{ username }}!</h1>
 <div class="">
 
   <div class="">
@@ -8,16 +9,11 @@
             class="rounded-lg peer placeholder-transparent h-10 w-full border-2 border-gray-800 text-gray-900 focus:outline-none focus:border- bg-stone-400"
             placeholder="Movie Name">
           <div class="flex justify-center mt-5">
-            <button type="submit" class="text-bold text-stone-400 border-2 p-1 bg-rose-900 border-stone-400 hover:border-bg-rose-900">Search</button>
+            <button type="submit" class="rounded-lg text-bold text-white border-2 p-1 bg-rose-900 border-white hover:border-rose-900">Search</button>
           </div>
         </div>
       </div>  
     </form>
   </div>
-
-  <div id="search-history">
-
-  </div >
-
-</div>
-
+  
+{{> search-history searchHistory=searchHistory}}
