@@ -19,6 +19,14 @@ SearchHistory.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    imdb_id: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    poster_url: {
+      type: DataTypes.STRING(500),
+      allowNull: false,
+    },
     search_date: {
       type: DataTypes.DATE,
       allowNull: false,

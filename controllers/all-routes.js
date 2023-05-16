@@ -51,7 +51,12 @@ router.get("/dashboard", async (req, res) => {
     const userID = req.user.user_id;
 
     // Render the dashboard page and pass the recently searched movies and username to the view
-    res.render("dashboard", { recentlySearchedMovies, username, userID });
+    res.render("dashboard", {
+      recentlySearchedMovies,
+      username,
+      userID,
+      isauthenticated: true,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
@@ -287,6 +292,8 @@ router.post("/film", async (req, res) => {
                 const searchHistoryData = {
                   user_id: userID,
                   movieName: movieName,
+                  imdb_id: imdbIDKey,
+                  poster_url: posterURL,
                   search_date: new Date(),
                 };
 
@@ -296,7 +303,13 @@ router.post("/film", async (req, res) => {
                   const newSearchHistory = await SearchHistory.create(
                     searchHistoryData,
                     {
-                      fields: ["user_id", "movieName", "search_date"],
+                      fields: [
+                        "user_id",
+                        "movieName",
+                        "imdb_id",
+                        "poster_url",
+                        "search_date",
+                      ],
                     }
                   );
 
