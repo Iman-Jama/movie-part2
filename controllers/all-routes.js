@@ -1,38 +1,55 @@
 const router = require("express").Router();
 const { Movie, Watchlist, Review } = require("../models");
 
-let isauthenticated = false;
-
 router.get("/", async (req, res) => {
-  const isauthenticated = req.isAuthenticated();
-  return res.render("home", { title: "page", isauthenticated });
+  try {
+    // Checks if the user is authenticated
+    const loggedIn = req.isAuthenticated();
+
+    // Renders the home page with loggedIn status
+    res.render("home", { loggedIn });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+router.get("/user/:num", async (req, res) => {
+  return res.render("user", Users[req.params.num - 1]);
 });
 
 router.get("/login", async (req, res) => {
+  if (req.isAuthenticated()) {
+    return res.redirect("/dashboard");
+  }
+
   return res.render("login", { title: "login" });
 });
 
-router.post("/logout", (req, res) => {
-  req.logout(() => {
-    res.redirect("/login");
+router.get("/logout", function (req, res, next) {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
   });
 });
 
-router.get("/register", async (req, res) => {
-  return res.render("register", { title: "Register" });
-});
-
-router.get("/dashboard", isAuthenticated, async (req, res) => {
-  return res.render("dashboard", { isauthenticated: true });
-});
-
-
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
+router.get("/dashboard", async (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    return res.redirect("/login");
   }
-  res.redirect("/login");
-}
+
+  try {
+    const username = req.user.username;
+
+    // Renders the dashboard page with username and loggedIn status
+    res.render("dashboard", { loggedIn: true, username });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
 
 // ADD TO WATCHLIST
 
@@ -207,7 +224,6 @@ router.post("/film", async (req, res) => {
               // var trailer = "https://www.youtube.com/embed/" + videoId;
 
               .then(async function (data) {
-
                 var movieData = {
                   movie_name: movieName,
                   imdb_id: imdbIDKey,
@@ -226,10 +242,7 @@ router.post("/film", async (req, res) => {
                   // add movie to database
                   // search for movie in database based on imdb_id
                   const existingMovie = await Movie.findOne({
-
-
                     imdb_id: imdbIDKey,
-
                   });
 
                   if (existingMovie) {
@@ -242,7 +255,6 @@ router.post("/film", async (req, res) => {
 
                   // search for associated reviews
                   const filmReviews = await Review.findAll({
-
                     where: { imdb_id: imdbIDKey },
 
                     attributes: ["review_text"],
@@ -301,7 +313,6 @@ router.post("/reviews", async (req, res) => {
       imdb_id: imdbId,
       review_text: reviewText,
       user_id: req.user.user_id,
-
     });
 
     return res.status(201).json({ message: "Review added successfully" });
