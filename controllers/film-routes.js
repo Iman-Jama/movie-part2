@@ -187,13 +187,14 @@ router.post("/film", async (req, res) => {
                 };
 
                 let reviews = [];
-                console.log(imdbIDKey);
 
                 try {
                   // add movie to database
                   // search for movie in database based on imdb_id
                   const existingMovie = await Movie.findOne({
-                    imdb_id: imdbIDKey,
+                    where: {
+                      imdb_id: imdbIDKey,
+                    },
                   });
 
                   if (existingMovie) {
