@@ -11,14 +11,13 @@ User.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
-    name: {
+    username: {
       type: DataTypes.STRING,
-      allowNull: true,
+      unique: true,
+      allowNull: false,
     },
-
-    
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -30,16 +29,14 @@ User.init(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+      set(value) {
+        const hashedPassword = bcrypt.hashSync(value, 10);
+        this.setDataValue("password", hashedPassword);
+      },
     },
   },
 
   {
-    // hooks: {
-    //   beforeCreate: async (newUserData) => {
-    //     newUserData.password = await bcrypt.hash(newUserData.password, 10);
-    //     return newUserData;
-    //   },
-    // },
     sequelize,
     timestamps: false,
     freezeTableName: true,

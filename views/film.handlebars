@@ -38,6 +38,7 @@
         </p>
         {{#if reviews}}
     <div id="reviews" class="inline-block border-stone-200 p-1 border-b-2 m-1">
+       
             <P>Reviews:<br>{{reviews}}</P>
     </div>
     {{/if}}
@@ -64,6 +65,7 @@
       <label for="review" class="block font-medium text-gray-700 mb-2">Review</label>
       <textarea id="review_text" name="review_text" class="border border-gray-400 p-2 rounded-lg w-full"></textarea>
     </div>
+    <input type="hidden" name="imdb_id" value="{{imdb_id}}">
     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Submit</button>
   </form>
 </div>

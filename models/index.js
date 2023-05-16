@@ -1,7 +1,6 @@
 const User = require("./User");
 const Movie = require("./Movies");
 const Review = require("./Review");
-const { move } = require("../controllers");
 const Watchlist = require("./Watchlist");
 
 User.hasMany(Watchlist, {
