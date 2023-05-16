@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Movie, Watchlist, Review } = require("../models");
+const { Movie, Watchlist, Review, SearchHistory } = require("../models");
 
 router.get("/", async (req, res) => {
   try {
@@ -48,9 +48,10 @@ router.get("/dashboard", async (req, res) => {
     });
 
     const username = req.user.username;
+    const userID = req.user.user_id;
 
     // Render the dashboard page and pass the recently searched movies and username to the view
-    res.render("dashboard", { recentlySearchedMovies, username });
+    res.render("dashboard", { recentlySearchedMovies, username, userID });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
@@ -279,6 +280,34 @@ router.post("/film", async (req, res) => {
                   console.log(err);
                   console.log("Movie not added.");
                 }
+
+                // Store the search in the SearchHistory table
+                const userID = req.user.user_id;
+
+                const searchHistoryData = {
+                  user_id: userID,
+                  movieName: movieName,
+                  search_date: new Date(),
+                };
+
+                console.log("SearchHistoryData:", searchHistoryData);
+
+                try {
+                  const newSearchHistory = await SearchHistory.create(
+                    searchHistoryData,
+                    {
+                      fields: ["user_id", "movieName", "search_date"],
+                    }
+                  );
+
+                  console.log(
+                    "Search history stored successfully!",
+                    newSearchHistory
+                  );
+                } catch (error) {
+                  console.error("Error storing search history:", error);
+                }
+
                 return res.render("film", {
                   movieName: movieName,
                   genre: genre,
