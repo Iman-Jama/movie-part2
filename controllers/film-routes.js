@@ -308,7 +308,7 @@ router.post("/reviews", async (req, res) => {
       user_id: req.user.user_id,
     });
 
-    return res.redirect("/dashboard")
+    return res.redirect("back");
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Server error" });
