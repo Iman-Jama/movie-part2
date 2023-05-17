@@ -223,6 +223,7 @@ router.post("/film", async (req, res) => {
                   );
                   // associate reviews with new movie
                   console.log(reviews);
+                  console.log(reviewID);
 
                   console.log(
                     "Movie added successfully with associated reviews!"
@@ -275,6 +276,7 @@ router.post("/film", async (req, res) => {
                   imdb_id: imdbIDKey,
                   isauthenticated: true, // Pass the isauthenticated variable to the view
                 });
+                
               });
           });
         // show status code 500 if no movie found in API database
