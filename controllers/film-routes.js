@@ -321,7 +321,8 @@ router.post("/reviews", async (req, res) => {
       user_id: req.user.user_id,
     });
 
-    return res.status(201).json({ message: "Review added successfully" });
+    // Redirect back to the same page
+    return res.redirect("back");
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Server error" });
