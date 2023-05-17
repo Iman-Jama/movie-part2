@@ -36,6 +36,9 @@ router.post("/filmadded", async (req, res) => {
 // VIEW WATCHLIST
 
 router.get("/filmlist", async (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.redirect("/login");
+  }
   // create variable to get current user
   res.locals.currentUser = req.user;
 

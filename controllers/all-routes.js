@@ -4,10 +4,10 @@ const { Movie, Watchlist, Review, SearchHistory } = require("../models");
 router.get("/", async (req, res) => {
   try {
     // Checks if the user is authenticated
-    const loggedIn = req.isAuthenticated();
+    const isauthenticated = req.isAuthenticated();
 
     // Renders the home page with loggedIn status
-    res.render("home", { loggedIn });
+    res.render("home", { isauthenticated });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });

@@ -1,17 +1,16 @@
 <div id="search-history">
   <h2>Recently Searched Movies:</h2>
-  <div class="grid grid-cols-4 gap-4">
+  <div class="grid grid-cols-8 gap-4">
     {{#each searchHistory}}
-    <a href="/film/{{encodeURI this.movieName}}" class="bg-white shadow-lg rounded-lg overflow-hidden">
-      <img src="{{this.poster_url}}" alt="{{this.movieName}}" class="w-full h-32 object-cover">
-      <div class="p-2">
+    <a href="/film/{{encodeURI this.movieName}}" class="bg-white shadow-lg rounded-lg overflow-hidden flex">
+      <img src="{{this.poster_url}}" alt="{{this.movieName}}" class="w-1/2 h-32 object-cover">
+      <div class="p-2 w-1/2 flex items-center">
         <p class="text-base font-semibold">{{this.movieName}}</p>
       </div>
     </a>
     {{/each}}
   </div>
 </div>
-
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -36,26 +35,26 @@
     const searchHistoryContainer = $("#search-history");
     searchHistoryContainer.empty();
 
-    const gridContainer = $("<div>").addClass("grid grid-cols-2 gap-4");
+    const gridContainer = $("<div>").addClass("grid grid-cols-6 gap-4");
     searchHistoryContainer.append(gridContainer);
 
-  searchHistory.forEach((entry) => {
-    const cardLink = $("<a>")
-      .attr("href", "/film/" + encodeURIComponent(entry.movieName))
-      .addClass("bg-white shadow-lg rounded-lg overflow-hidden");
-    gridContainer.append(cardLink);
+    searchHistory.forEach((entry) => {
+      const cardLink = $("<a>")
+        .attr("href", "/film/" + encodeURIComponent(entry.movieName))
+        .addClass("bg-white shadow-lg rounded-lg overflow-hidden flex");
+      gridContainer.append(cardLink);
 
       const cardImage = $("<img>")
         .attr("src", entry.poster_url)
         .attr("alt", entry.movieName)
-        .addClass("w-full h-40 object-cover");
+        .addClass("w-1/2 h-32 object-cover");
       cardLink.append(cardImage);
 
-      const cardContent = $("<div>").addClass("p-4");
+      const cardContent = $("<div>").addClass("p-2 w-1/2 flex items-center");
       cardLink.append(cardContent);
 
       const cardTitle = $("<p>")
-        .addClass("text-xl font-bold")
+        .addClass("text-base font-semibold")
         .text(entry.movieName);
       cardContent.append(cardTitle);
     });
