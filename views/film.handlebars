@@ -6,7 +6,7 @@
 {{>add-remove}}
 
 <div id="poster-div" class="bg-zinc-200 flex justify-center items-center h-100 mb-2">
-    <img src="{{poster_URL}}"" class="block rounded-lg lg:w-80" alt="poster"/>
+    <img src="{{poster_URL}}" class="block rounded-lg lg:w-80" alt="poster"/>
 
 {{!-- // <form action="/filmadded" method="POST" class="mx-auto w-1/2">
     // <input type="hidden" name="movieName" value="{{movieName}}">
@@ -37,11 +37,14 @@
         <p>{{ description }}
         </p>
         {{#if reviews}}
-    <div id="reviews" class="inline-block border-stone-200 p-1 border-b-2 m-1">
-       
-            <P>Reviews:<br>{{reviews}}</P>
-    </div>
-    {{/if}}
+  <div id="reviews" class="inline-block border-stone-200 p-1 border-b-2 m-1">
+    <p>Reviews:</p>
+    {{#each reviews as |reviewText index|}}
+      <p data-review-id="{{review_id.[index]}}">{{reviewText}}</p>
+    {{/each}}
+  </div>
+{{/if}}
+
     </div>
     
 
@@ -74,5 +77,5 @@
 
 <div id="reviews" class="bg-pink-500 flex justify-center items-center">
     <h2 class="block">Reviews</h2>
-    <p class="block">{{review}}</p>
+    
 </div>
