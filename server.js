@@ -4,7 +4,6 @@ const path = require("path");
 const sequelize = require("./config/connection");
 const hbs = exphbs.create({});
 const helpers = require("./utils/helpers");
-
 const passport = require("passport");
 const session = require("express-session");
 const initializePassport = require("./config/passport-config");

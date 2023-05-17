@@ -4,11 +4,12 @@ const { User } = require("../models");
 
 // Renders the registration form
 router.get("/register", async (req, res) => {
-  return res.render("register");
+  const error = req.query.error; // Get the error message from query parameters
+  return res.render("register", { error });
 });
 
 // Handles registration form submission
-router.post("/register", async (req, res) => {
+router.post("/register", async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
 
@@ -29,8 +30,19 @@ router.post("/register", async (req, res) => {
       return res.redirect("/dashboard");
     });
   } catch (error) {
+    // Check if the error is due to existing username or email
+    if (
+      error.name === "SequelizeUniqueConstraintError" &&
+      (error.errors[0].path === "username" || error.errors[0].path === "email")
+    ) {
+      const errorMessage = "Username or email already exists";
+      return res.redirect(
+        `/register?error=${encodeURIComponent(errorMessage)}`
+      );
+    }
+
     console.error(error);
-    res.status(500).json({ error: "Server error" });
+    return res.status(500).json({ error: "Server error" });
   }
 });
 
