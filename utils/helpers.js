@@ -1,4 +1,4 @@
-const handlebars = require('handlebars');
+const handlebars = require("handlebars");
 
 const isInWatchlist = (movieName, watchlist) => {
   if (!Array.isArray(watchlist)) {
@@ -8,13 +8,14 @@ const isInWatchlist = (movieName, watchlist) => {
   return watchlist.some((item) => item.movie_name === movieName);
 };
 
-handlebars.registerHelper('isInWatchlist', isInWatchlist);
-
-module.exports = {
-  isInWatchlist: isInWatchlist
+const encodeURI = (component) => {
+  return encodeURIComponent(component);
 };
 
+handlebars.registerHelper("isInWatchlist", isInWatchlist);
+handlebars.registerHelper("encodeURI", encodeURI);
 
-
-
-
+module.exports = {
+  isInWatchlist: isInWatchlist,
+  encodeURI: encodeURI,
+};
