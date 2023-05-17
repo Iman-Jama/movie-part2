@@ -180,18 +180,17 @@ router.post("/film", async (req, res) => {
             var runtime = data.runtime;
 
             fetch(
-              "https://www.googleapis.com/youtube/v3/search?key=AIzaSyCwgbAu1Gc2IwjwgERI4QF7O9pogMLMmo4&type=video&part=snippet&maxResults=1&q=movie%20trailer%20" +
+              "https://www.googleapis.com/youtube/v3/search?key=AIzaSyDM84Q5kKRoiKTM5XfoP7L8PCpL5im6eXU&type=video&part=snippet&maxResults=1&q=movie%20trailer%20" +
                 movieName
             )
               .then(function (response) {
                 return response.json();
               })
-
-              // var { videoId } = data.items[0].id;
-
-              // var trailer = "https://www.youtube.com/embed/" + videoId;
-
               .then(async function (data) {
+                var { videoId } = data.items[0].id;
+
+                var trailer = "https://www.youtube.com/embed/" + videoId;
+
                 var movieData = {
                   movie_name: movieName,
                   imdb_id: imdbIDKey,
@@ -201,7 +200,7 @@ router.post("/film", async (req, res) => {
                   poster_url: posterURL,
                   rating: rating,
                   runtime: runtime,
-                  // trailer: trailer,
+                  trailer: trailer,
                 };
 
                 let reviews = [];
@@ -673,7 +672,7 @@ router.get("/film/:movieName", async (req, res) => {
                   description: description,
                   poster_URL: posterURL,
                   rating: rating,
-                  // trailer: trailer,
+                  trailer: trailer,
                   runtime: runtime,
                   reviews: reviews,
                   review_id: reviewID,
@@ -710,7 +709,7 @@ router.post("/reviews", async (req, res) => {
       user_id: req.user.user_id,
     });
 
-    return res.status(201).json({ message: "Review added successfully" });
+    return res.redirect("/dashboard");
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Server error" });
