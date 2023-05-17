@@ -29,12 +29,12 @@
 
 
 <div class="flex justify-center items-center">
-    <div id="Synopsis" class="w-1/2 mx-auto text-center mt-3 font-medium">
-        <p>{{ description }}
+    <div id="Synopsis" class="w-1/2 mx-auto text-center mt-3 font-medium mb-5">
+        <p class="mt-3 mb-5">{{ description }}
         </p>
    {{#if reviews}}
   <div id="reviews" class="inline-block border-stone-200 p-1 border-b-2 m-1">
-    <p>Reviews:</p>
+    <p class="underline text-xl mb-2 bg-red-400"><strong>Reviews:</strong></p>
     {{#each reviews as |reviewText index|}}
       <p data-review-id="{{review_id.[index]}}">{{reviewText}}</p>
     {{/each}}
@@ -46,8 +46,8 @@
 
 </div>
 
-<div class="trailer container self-center items-center flex rounded w-1/2" id="movieTrailer">
-    <iframe width="560" height="215" src="{{trailer}}" frameborder="0"
+<div class="flex" id="movieTrailer">
+    <iframe class="trailer container mx-auto mb-5 h-52 w-96" src="" frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen id="trailer"></iframe>
 </div>
@@ -71,13 +71,12 @@
   </form>
 </div>
 
-{{!-- This code block is allowing reviews to be displayed if there are any attached to that film. --}}
+{{!-- This code block is allowing reviews to be displayed if there are any attached to that film.
 {{#if reviews}}
 <div id="reviews" class="bg-pink-500 flex justify-center items-center">
-    <h2 class="block">Reviews</h2>
     <p class="block">{{review}}</p>
 </div>
 {{/if}}
 
-</div>
+</div> --}}
 

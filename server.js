@@ -45,7 +45,7 @@ app.use(require("./controllers/all-routes"));
 app.use(require("./controllers/register-routes"));
 app.use(require("./controllers/login-routes"));
 app.use(require("./controllers/search-history-routes"));
-// app.use(require("./controllers/film-routes"));
+app.use(require("./controllers/film-routes"));
 app.use("/api", require("./controllers/api/movies"));
 
 // Connects to DB & starts the server to begin listening to the application

@@ -1,358 +1,475 @@
 const express = require("express");
 const router = express.Router();
 const { Watchlist, Movie, Review, SearchHistory } = require("../models");
+// ADD TO WATCHLIST ROUTES
+router.post("/filmadded", async (req, res) => {
+  res.locals.currentUser = req.user;
+  try {
+    // adds a movie to the watchlist
+    // checks if in watchlist then creates using rhe findOne method
+    const existingMovie = await Watchlist.findOne({
+      where: {
+        movie_name: req.body.movieName,
+      },
+    });
+    if (existingMovie) {
+      console.log("Movie already exists in watchlist");
+      return res.redirect("/dashboard");
+    } else {
+      const createdWatchlist = await Watchlist.create({
+        user_id: req.user.user_id,
+        movie_name: req.body.movieName,
+      });
+      console.log("Movie added to watchlist successfully!");
+    }
+    var movieName = req.body.movieName;
+    return res.redirect("/dashboard");
+  } catch (err) {
+    console.log(err);
+    console.log("Movie not added to watchlist.");
+    res.status(404).json(err);
+  }
+});
 
-// router.post("/film", async (req, res) => {
-//   console.log(req);
-//   var { movieName } = req.body;
+// VIEW WATCHLIST
 
-//   const options = {
-//     method: "GET",
-//     headers: {
-//       "X-RapidAPI-Key": "019a625d93msh4b8ca83c4e651e4p1b04f6jsn06afb2002bf9",
-//       "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
-//     },
-//   };
+router.get("/filmlist", async (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.redirect("/login");
+  }
+  // create variable to get current user
+  res.locals.currentUser = req.user;
 
-//   // First API call to The Movie Database Alternative for Title and imdbID
+  // Check if the user is authenticated
+  const isAuthenticated = req.isAuthenticated();
 
-//   fetch(
-//     "https://movie-database-alternative.p.rapidapi.com/?s=" +
-//       movieName +
-//       "&r=json&page=1",
-//     options
-//   )
-//     // Parse the response to json
-//     .then(function (response) {
-//       return response.json();
-//     })
-//     .then(function (data) {
-//       // check input is valid
-//       if (data.hasOwnProperty("Search")) {
-//         // Get Title from the first Search result
-//         var movieTitleResults = data.Search[0].Title;
+  // find all movies within the watchlist that match the current user's user_id
+  const watchlistMovies = await Watchlist.findAll({
+    where: {
+      user_id: req.user.user_id,
+    },
+  });
 
-//         // Get the imdbIDKey from the first Search result
-//         var imdbIDKey = data.Search[0].imdbID;
+  // serialise the data so it is in separate objects
+  var movieData = watchlistMovies.map((movie_name) =>
+    movie_name.get({ plain: true })
+  );
 
-//         // Second API call to The Movie Database
-//         var secondAPIKey = "97c267f9a2d9d89d1419f2261423af96";
+  // fetch only the poster_url and description using the movie_names from the movie table
+  // promise.all ensures all the data is received before proceeding to return all the data together
+  Promise.all(
+    // serialise each object received from searching the movie table using the movie_name
+    movieData.map(async (item) => {
+      const movie = await Movie.findOne({
+        // request the poster_url and description where the movie_name is in the original watchlist array
+        attributes: ["poster_url", "description"],
+        where: {
+          movie_name: item.movie_name,
+        },
+      });
+      return {
+        movie_name: item.movie_name,
+        poster_url: movie.poster_url,
+        description: movie.description,
+      };
+    })
+  ).then((watchlistData) => {
+    // Pass the isAuthenticated variable to the template
+    return res.render("filmlist", {
+      title: "filmlist",
+      watchlistData,
+      isauthenticated: isAuthenticated,
+    });
+  });
+});
 
-//         fetch(
-//           "https://api.themoviedb.org/3/movie/" +
-//             imdbIDKey +
-//             "?api_key=" +
-//             secondAPIKey +
-//             "&language=en-US"
-//         )
-//           // Parse the response to json
-//           .then(function (response) {
-//             return response.json();
-//           })
-//           .then(function (data) {
-//             // Get Movie Title, Genre, Plot, Rating and Runtime from the fetch response
-//             movieName = data.original_title;
-//             var genre = data.genres[0].name;
-//             var description = data.overview;
-//             var posterURL =
-//               "https://image.tmdb.org/t/p/w500" + data.poster_path;
-//             var rating = Math.round(data.popularity);
-//             var runtime = data.runtime;
+router.post("/filmlist", (req, res) => {
+  res.locals.currentUser = req.user;
+  const watchlistMovie = Watchlist.findAll({
+    where: {
+      user_id: req.user.user_id,
+    },
+  });
+  console.log(watchlistMovie);
+  if (watchlistMovie == null) {
+    return res.render("filmlist", {
+      title: "filmlist",
+      movie_name: "No movies in database!",
+    });
+  } else {
+    return res.render("filmlist", {
+      title: "filmlist",
+      movie_name: watchlistMovie,
+    });
+  }
+});
 
-//             fetch(
-//               "https://www.googleapis.com/youtube/v3/search?key=AIzaSyDM84Q5kKRoiKTM5XfoP7L8PCpL5im6eXU&type=video&part=snippet&maxResults=1&q=movie%20trailer%20" +
-//                 movieName
-//             )
-//               .then(function (response) {
-//                 return response.json();
-//               })
+// // REMOVE FILM FROM WATCHLIST
 
-//               .then(async function (data) {
-//                 var { videoId } = data.items[0].id;
+router.post("/filmremoved", async (req, res) => {
+  res.locals.currentUser = req.user;
+  Watchlist.destroy({
+    where: {
+      user_id: req.user.user_id,
+      movie_name: req.body.movie_name,
+    },
+  }).then(() => {
+    res.redirect("/filmlist");
+  });
+});
 
-//                 var trailer = "https://www.youtube.com/embed/" + videoId;
-//                 var movieData = {
-//                   movie_name: movieName,
-//                   imdb_id: imdbIDKey,
-//                   runtime: runtime,
-//                   description: description,
-//                   genre: genre,
-//                   poster_url: posterURL,
-//                   rating: rating,
-//                   runtime: runtime,
-//                   trailer: trailer,
-//                 };
+// FETCH FILM DATA FROM APIS
 
-//                 let reviews = [];
-//                 let reviewID = [];
-//                 try {
-//                   // add movie to database
-//                   // search for movie in database based on imdb_id
-//                   const existingMovie = await Movie.findOne({
-//                     where: {
-//                       imdb_id: imdbIDKey,
-//                     },
-//                   });
+router.post("/film", async (req, res) => {
+  var { movieName } = req.body;
 
-//                   if (existingMovie) {
-//                     console.log("Movie already exists in the database!");
-//                   } else {
-//                     // add movie to database
-//                     const newMovie = await Movie.create(movieData);
-//                     console.log("Movie added successfully!");
-//                   }
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "019a625d93msh4b8ca83c4e651e4p1b04f6jsn06afb2002bf9",
+      "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
+    },
+  };
 
-//                   // search for associated reviews
-//                   const filmReviews = await Review.findAll({
-//                     where: { imdb_id: imdbIDKey },
+  // First API call to The Movie Database Alternative for Title and imdbID
 
-//                     attributes: ["review_text", "review_id"],
-//                   });
+  fetch(
+    "https://movie-database-alternative.p.rapidapi.com/?s=" +
+      movieName +
+      "&r=json&page=1",
+    options
+  )
+    // Parse the response to json
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      // check input is valid
+      if (data.hasOwnProperty("Search")) {
+        // Get Title from the first Search result
+        var movieTitleResults = data.Search[0].Title;
 
-//                   reviews = filmReviews.map(
-//                     (review) => review.dataValues.review_text
-//                   );
+        // Get the imdbIDKey from the first Search result
+        var imdbIDKey = data.Search[0].imdbID;
 
-//                   reviewID = filmReviews.map(
-//                     (review) => review.dataValues.review_id
-//                   );
-//                   // associate reviews with new movie
-//                   console.log(reviews);
+        // Second API call to The Movie Database
+        var secondAPIKey = "97c267f9a2d9d89d1419f2261423af96";
 
-//                   console.log(
-//                     "Movie added successfully with associated reviews!"
-//                   );
-//                 } catch (err) {
-//                   console.log(err);
-//                   console.log("Movie not added.");
-//                 }
+        fetch(
+          "https://api.themoviedb.org/3/movie/" +
+            imdbIDKey +
+            "?api_key=" +
+            secondAPIKey +
+            "&language=en-US"
+        )
+          // Parse the response to json
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            // Get Movie Title, Genre, Plot, Rating and Runtime from the fetch response
+            movieName = data.original_title;
+            var genre = data.genres[0].name;
+            var description = data.overview;
+            var posterURL =
+              "https://image.tmdb.org/t/p/w500" + data.poster_path;
+            var rating = Math.round(data.popularity);
+            var runtime = data.runtime;
 
-//                 // Store the search in the SearchHistory table
-//                 const userID = req.user.user_id;
+            fetch(
+              "https://www.googleapis.com/youtube/v3/search?key=AIzaSyDM84Q5kKRoiKTM5XfoP7L8PCpL5im6eXU&type=video&part=snippet&maxResults=1&q=movie%20trailer%20" +
+                movieName
+            )
+              .then(function (response) {
+                return response.json();
+              })
 
-//                 const searchHistoryData = {
-//                   user_id: userID,
-//                   movieName: movieName,
-//                   search_date: new Date(),
-//                   imdb_id: imdbIDKey,
-//                   poster_url: posterURL,
-//                 };
+              .then(async function (data) {
+                // var { videoId } = data.items[0].id;
 
-//                 try {
-//                   const newSearchHistory = await SearchHistory.create(
-//                     searchHistoryData,
-//                     {
-//                       fields: [
-//                         "user_id",
-//                         "movieName",
-//                         "search_date",
-//                         "imdb_id",
-//                         "poster_url",
-//                       ],
-//                     }
-//                   );
+                // var trailer = "https://www.youtube.com/embed/" + videoId;
+                var movieData = {
+                  movie_name: movieName,
+                  imdb_id: imdbIDKey,
+                  runtime: runtime,
+                  description: description,
+                  genre: genre,
+                  poster_url: posterURL,
+                  rating: rating,
+                  runtime: runtime,
+                  // trailer: trailer,
+                };
 
-//                   console.log("Search history stored successfully!");
-//                 } catch (error) {
-//                   console.error("Error storing search history:", error);
-//                 }
+                let reviews = [];
+                let reviewID = [];
+                try {
+                  // add movie to database
+                  // search for movie in database based on imdb_id
+                  const existingMovie = await Movie.findOne({
+                    where: {
+                      imdb_id: imdbIDKey,
+                    },
+                  });
 
-//                 return res.render("film", {
-//                   movieName: movieName,
-//                   genre: genre,
-//                   description: description,
-//                   poster_URL: posterURL,
-//                   rating: rating,
-//                   trailer: trailer,
-//                   runtime: runtime,
-//                   reviews: reviews,
-//                   review_id: reviewID,
-//                   imdb_id: imdbIDKey,
-//                   isauthenticated: true, // Pass the isauthenticated variable to the view
-//                 });
-//               });
-//           });
-//         // show status code 500 if no movie found in API database
-//       } else {
-//         res.status(500).send("Server error");
-//       }
-//     });
-// });
+                  if (existingMovie) {
+                    console.log("Movie already exists in the database!");
+                  } else {
+                    // add movie to database
+                    const newMovie = await Movie.create(movieData);
+                    console.log("Movie added successfully!");
+                  }
 
-// router.get("/film/:movieName", async (req, res) => {
-//   console.log(req);
-//   var movieName = decodeURIComponent(req.params.movieName);
+                  // search for associated reviews
+                  const filmReviews = await Review.findAll({
+                    where: { imdb_id: imdbIDKey },
 
-//   const options = {
-//     method: "GET",
-//     headers: {
-//       "X-RapidAPI-Key": "019a625d93msh4b8ca83c4e651e4p1b04f6jsn06afb2002bf9",
-//       "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
-//     },
-//   };
+                    attributes: ["review_text", "review_id"],
+                  });
 
-//   // First API call to The Movie Database Alternative for Title and imdbID
+                  reviews = filmReviews.map(
+                    (review) => review.dataValues.review_text
+                  );
 
-//   fetch(
-//     "https://movie-database-alternative.p.rapidapi.com/?s=" +
-//       movieName +
-//       "&r=json&page=1",
-//     options
-//   )
-//     // Parse the response to json
-//     .then(function (response) {
-//       return response.json();
-//     })
-//     .then(function (data) {
-//       // check input is valid
-//       if (data.hasOwnProperty("Search")) {
-//         // Get Title from the first Search result
-//         var movieTitleResults = data.Search[0].Title;
+                  reviewID = filmReviews.map(
+                    (review) => review.dataValues.review_id
+                  );
+                  // associate reviews with new movie
+                  console.log(reviews);
 
-//         // Get the imdbIDKey from the first Search result
-//         var imdbIDKey = data.Search[0].imdbID;
+                  console.log(
+                    "Movie added successfully with associated reviews!"
+                  );
+                } catch (err) {
+                  console.log(err);
+                  console.log("Movie not added.");
+                }
 
-//         // Second API call to The Movie Database
-//         var secondAPIKey = "97c267f9a2d9d89d1419f2261423af96";
+                // Store the search in the SearchHistory table
+                const userID = req.user.user_id;
 
-//         fetch(
-//           "https://api.themoviedb.org/3/movie/" +
-//             imdbIDKey +
-//             "?api_key=" +
-//             secondAPIKey +
-//             "&language=en-US"
-//         )
-//           // Parse the response to json
-//           .then(function (response) {
-//             return response.json();
-//           })
-//           .then(function (data) {
-//             // Get Movie Title, Genre, Plot, Rating and Runtime from the fetch response
-//             movieName = data.original_title;
-//             var genre = data.genres[0].name;
-//             var description = data.overview;
-//             var posterURL =
-//               "https://image.tmdb.org/t/p/w500" + data.poster_path;
-//             var rating = Math.round(data.popularity);
-//             var runtime = data.runtime;
+                const searchHistoryData = {
+                  user_id: userID,
+                  movieName: movieName,
+                  search_date: new Date(),
+                  imdb_id: imdbIDKey,
+                  poster_url: posterURL,
+                };
 
-//             fetch(
-//               "https://www.googleapis.com/youtube/v3/search?key=AIzaSyCwgbAu1Gc2IwjwgERI4QF7O9pogMLMmo4&type=video&part=snippet&maxResults=1&q=movie%20trailer%20" +
-//                 movieName
-//             )
-//               .then(function (response) {
-//                 return response.json();
-//               })
+                try {
+                  const newSearchHistory = await SearchHistory.create(
+                    searchHistoryData,
+                    {
+                      fields: [
+                        "user_id",
+                        "movieName",
+                        "search_date",
+                        "imdb_id",
+                        "poster_url",
+                      ],
+                    }
+                  );
 
-//               // var { videoId } = data.items[0].id;
+                  console.log("Search history stored successfully!");
+                } catch (error) {
+                  console.error("Error storing search history:", error);
+                }
 
-//               // var trailer = "https://www.youtube.com/embed/" + videoId;
+                return res.render("film", {
+                  movieName: movieName,
+                  genre: genre,
+                  description: description,
+                  poster_URL: posterURL,
+                  rating: rating,
+                  // trailer: trailer,
+                  runtime: runtime,
+                  reviews: reviews,
+                  review_id: reviewID,
+                  imdb_id: imdbIDKey,
+                  isauthenticated: true, // Pass the isauthenticated variable to the view
+                });
+              });
+          });
+        // show status code 500 if no movie found in API database
+      } else {
+        res.status(500).send("Server error");
+      }
+    });
+});
 
-//               .then(async function (data) {
-//                 var movieData = {
-//                   movie_name: movieName,
-//                   imdb_id: imdbIDKey,
-//                   runtime: runtime,
-//                   description: description,
-//                   genre: genre,
-//                   poster_url: posterURL,
-//                   rating: rating,
-//                   runtime: runtime,
-//                   // trailer: trailer,
-//                 };
+router.get("/film/:movieName", async (req, res) => {
+  var movieName = decodeURIComponent(req.params.movieName);
 
-//                 let reviews = [];
-//                 let reviewID = [];
-//                 try {
-//                   // add movie to database
-//                   // search for movie in database based on imdb_id
-//                   const existingMovie = await Movie.findOne({
-//                     where: {
-//                       imdb_id: imdbIDKey,
-//                     },
-//                   });
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "019a625d93msh4b8ca83c4e651e4p1b04f6jsn06afb2002bf9",
+      "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
+    },
+  };
 
-//                   if (existingMovie) {
-//                     console.log("Movie already exists in the database!");
-//                   } else {
-//                     // add movie to database
-//                     const newMovie = await Movie.create(movieData);
-//                     console.log("Movie added successfully!");
-//                   }
+  // First API call to The Movie Database Alternative for Title and imdbID
 
-//                   // search for associated reviews
-//                   const filmReviews = await Review.findAll({
-//                     where: { imdb_id: imdbIDKey },
+  fetch(
+    "https://movie-database-alternative.p.rapidapi.com/?s=" +
+      movieName +
+      "&r=json&page=1",
+    options
+  )
+    // Parse the response to json
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      // check input is valid
+      if (data.hasOwnProperty("Search")) {
+        // Get Title from the first Search result
+        var movieTitleResults = data.Search[0].Title;
 
-//                     attributes: ["review_text", "review_id"],
-//                   });
+        // Get the imdbIDKey from the first Search result
+        var imdbIDKey = data.Search[0].imdbID;
 
-//                   reviews = filmReviews.map(
-//                     (review) => review.dataValues.review_text
-//                   );
+        // Second API call to The Movie Database
+        var secondAPIKey = "97c267f9a2d9d89d1419f2261423af96";
 
-//                   reviewID = filmReviews.map(
-//                     (review) => review.dataValues.review_id
-//                   );
-//                   // associate reviews with new movie
-//                   console.log(reviews);
+        fetch(
+          "https://api.themoviedb.org/3/movie/" +
+            imdbIDKey +
+            "?api_key=" +
+            secondAPIKey +
+            "&language=en-US"
+        )
+          // Parse the response to json
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            // Get Movie Title, Genre, Plot, Rating and Runtime from the fetch response
+            movieName = data.original_title;
+            var genre = data.genres[0].name;
+            var description = data.overview;
+            var posterURL =
+              "https://image.tmdb.org/t/p/w500" + data.poster_path;
+            var rating = Math.round(data.popularity);
+            var runtime = data.runtime;
 
-//                   console.log(
-//                     "Movie added successfully with associated reviews!"
-//                   );
-//                 } catch (err) {
-//                   console.log(err);
-//                   console.log("Movie not added.");
-//                 }
+            fetch(
+              "https://www.googleapis.com/youtube/v3/search?key=AIzaSyDM84Q5kKRoiKTM5XfoP7L8PCpL5im6eXU&type=video&part=snippet&maxResults=1&q=movie%20trailer%20" +
+                movieName
+            )
+              .then(function (response) {
+                return response.json();
+              })
 
-//                 // Store the search in the SearchHistory table
-//                 const userID = req.user.user_id;
+              .then(async function (data) {
+                // var { videoId } = data.items[0].id;
 
-//                 const searchHistoryData = {
-//                   user_id: userID,
-//                   movieName: movieName,
-//                   search_date: new Date(),
-//                   imdb_id: imdbIDKey,
-//                   poster_url: posterURL,
-//                 };
+                // var trailer = "https://www.youtube.com/embed/" + videoId;
+                var movieData = {
+                  movie_name: movieName,
+                  imdb_id: imdbIDKey,
+                  runtime: runtime,
+                  description: description,
+                  genre: genre,
+                  poster_url: posterURL,
+                  rating: rating,
+                  runtime: runtime,
+                  // trailer: trailer,
+                };
 
-//                 try {
-//                   const newSearchHistory = await SearchHistory.create(
-//                     searchHistoryData,
-//                     {
-//                       fields: [
-//                         "user_id",
-//                         "movieName",
-//                         "search_date",
-//                         "imdb_id",
-//                         "poster_url",
-//                       ],
-//                     }
-//                   );
+                let reviews = [];
+                let reviewID = [];
+                try {
+                  // add movie to database
+                  // search for movie in database based on imdb_id
+                  const existingMovie = await Movie.findOne({
+                    where: {
+                      imdb_id: imdbIDKey,
+                    },
+                  });
 
-//                   console.log("Search history stored successfully!");
-//                 } catch (error) {
-//                   console.error("Error storing search history:", error);
-//                 }
+                  if (existingMovie) {
+                    console.log("Movie already exists in the database!");
+                  } else {
+                    // add movie to database
+                    const newMovie = await Movie.create(movieData);
+                    console.log("Movie added successfully!");
+                  }
 
-//                 return res.render("film", {
-//                   movieName: movieName,
-//                   genre: genre,
-//                   description: description,
-//                   poster_URL: posterURL,
-//                   rating: rating,
-//                   trailer: trailer,
-//                   runtime: runtime,
-//                   reviews: reviews,
-//                   review_id: reviewID,
-//                   imdb_id: imdbIDKey,
-//                   isauthenticated: true, // Pass the isauthenticated variable to the view
-//                 });
-//               });
-//           });
-//         // show status code 500 if no movie found in API database
-//       } else {
-//         res.status(500).send("Server error");
-//       }
-//     });
-// });
+                  // search for associated reviews
+                  const filmReviews = await Review.findAll({
+                    where: { imdb_id: imdbIDKey },
+
+                    attributes: ["review_text", "review_id"],
+                  });
+
+                  reviews = filmReviews.map(
+                    (review) => review.dataValues.review_text
+                  );
+
+                  reviewID = filmReviews.map(
+                    (review) => review.dataValues.review_id
+                  );
+                  // associate reviews with new movie
+                  console.log(reviews);
+
+                  console.log(
+                    "Movie added successfully with associated reviews!"
+                  );
+                } catch (err) {
+                  console.log(err);
+                  console.log("Movie not added.");
+                }
+
+                // Store the search in the SearchHistory table
+                const userID = req.user.user_id;
+
+                const searchHistoryData = {
+                  user_id: userID,
+                  movieName: movieName,
+                  search_date: new Date(),
+                  imdb_id: imdbIDKey,
+                  poster_url: posterURL,
+                };
+
+                try {
+                  const newSearchHistory = await SearchHistory.create(
+                    searchHistoryData,
+                    {
+                      fields: [
+                        "user_id",
+                        "movieName",
+                        "search_date",
+                        "imdb_id",
+                        "poster_url",
+                      ],
+                    }
+                  );
+
+                  console.log("Search history stored successfully!");
+                } catch (error) {
+                  console.error("Error storing search history:", error);
+                }
+
+                return res.render("film", {
+                  movieName: movieName,
+                  genre: genre,
+                  description: description,
+                  poster_URL: posterURL,
+                  rating: rating,
+                  // trailer: trailer,
+                  runtime: runtime,
+                  reviews: reviews,
+                  review_id: reviewID,
+                  imdb_id: imdbIDKey,
+                  isauthenticated: true, // Pass the isauthenticated variable to the view
+                });
+              });
+          });
+        // show status code 500 if no movie found in API database
+      } else {
+        res.status(500).send("Server error");
+      }
+    });
+});
+
+module.exports = router;
