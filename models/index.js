@@ -1,8 +1,12 @@
+//dependencies
 const User = require("./User");
 const Movie = require("./Movies");
 const Review = require("./Review");
 const Watchlist = require("./Watchlist");
 const SearchHistory = require("./SearchHistory");
+
+//This is our index.js file within our models folder.
+//This file is creating the relationships between the tables allowing data to be added to different places within the database.
 
 User.hasMany(Watchlist, {
   foreignKey: "user_id",

@@ -1,3 +1,5 @@
+//SCRIPT FILE FOR PREVIOUS VERSION OF THE APP.
+
 // Global Variables
 var moviePoster = document.getElementById("moviePoster");
 var movieTitle = document.getElementById("movieTitle");

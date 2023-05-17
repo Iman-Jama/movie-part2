@@ -1,3 +1,6 @@
+{{!-- This is the handlebar responsible for the dashboard page. We are using tailwind CSS for the styling.--}}
+
+{{!-- This displays the chosen username of the user  --}}
 <h1 class="text-3xl font-bold mb-4">Welcome, {{ username }}!</h1>
 <div class="">
   <div class="bg-red-200">
@@ -15,4 +18,5 @@
     </form>
   </div>
   
+{{!-- This renders the search history partial handlebar --}}
 {{> search-history searchHistory=searchHistory}}

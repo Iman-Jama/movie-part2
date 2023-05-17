@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const { Watchlist, Movie, Review, SearchHistory } = require("../models");
 
-// ADD TO WATCHLIST
+// ADD TO WATCHLIST ROUTES
 router.post("/filmadded", async (req, res) => {
   res.locals.currentUser = req.user;
   try {
-    // add movie to watchlist
-    // check if in watchlist then create
+    // adds a movie to the watchlist
+    // checks if in watchlist then creates using rhe findOne method
     const existingMovie = await Watchlist.findOne({
       where: {
         movie_name: req.body.movieName,

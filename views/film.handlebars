@@ -1,3 +1,5 @@
+{{!-- This is the handlebar responsible for the film page. We are using tailwind CSS for the styling.--}}
+
 
 <div class="flex justify-center items-center">
     <h1 class="w-1/2 mx-auto text-center text-2xl font-bold"> {{ movieName }} </h1>
@@ -7,11 +9,6 @@
 
 <div id="poster-div" class="bg-zinc-200 flex justify-center items-center h-100 mb-2">
     <img src="{{poster_URL}}"" class="block rounded-lg lg:w-80" alt="poster"/>
-
-{{!-- <form action="/filmadded" method="POST" class="mx-auto w-1/2">
-<input type="hidden" name="movieName" value="{{movieName}}">
-<button type="submit">Add to watchlist</button>
-</form> --}}
 
 </div>
 
@@ -32,7 +29,6 @@
 
 
 <div class="flex justify-center items-center">
-
     <div id="Synopsis" class="w-1/2 mx-auto text-center mt-3 font-medium">
         <p>{{ description }}
         </p>
@@ -58,6 +54,7 @@
     <div class="bg-red-400 flex justify-center">
         <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your review</label>
     </div>
+
 <div class="bg-gray-200 p-4">
   <h2 class="text-lg font-medium mb-4">Leave a Review</h2>
   <form action="/reviews" method="POST">
@@ -71,6 +68,7 @@
   </form>
 </div>
 
+{{!-- This code block is allowing reviews to be displayed if there are any attached to that film. --}}
 {{#if reviews}}
 <div id="reviews" class="bg-pink-500 flex justify-center items-center">
     <h2 class="block">Reviews</h2>

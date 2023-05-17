@@ -1,12 +1,13 @@
+//imports the neccessary models and datatypes for sequelize.
 const { Model, DataTypes } = require("sequelize");
-
+//database connection
 const sequelize = require("../config/connection.js");
 
 class Movie extends Model {}
-
+//init method initialises the model
 Movie.init(
   {
-    // define columns
+    // define columns for the table which gets stored in the database
     movie_name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -53,10 +54,11 @@ Movie.init(
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
-
     },
   },
-
+  //specifies the database connection, disables auto timestamp.
+  //underscored: true converst camelCase to snake_case
+  //model name sets the model name to movie therefore this name should be referenced 
   {
     sequelize,
     timestamps: false,

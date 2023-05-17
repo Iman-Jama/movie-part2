@@ -1,12 +1,12 @@
 const { Model, DataTypes } = require("sequelize");
-
 const sequelize = require("../config/connection.js");
 
 class Review extends Model {}
 
+//init method initialises the model
 Review.init(
   {
-    // define columns
+    // define columns for the table which gets stored in the database
     review_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -34,7 +34,9 @@ Review.init(
       allowNull: false,
     },
   },
-
+  //specifies the database connection, disables auto timestamp.
+  //underscored: true converst camelCase to snake_case
+  //model name sets the model name to movie therefore this name should be referenced
   {
     sequelize,
     timestamps: false,

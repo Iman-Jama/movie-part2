@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { Movie, Watchlist, Review, SearchHistory } = require("../models");
 
+// Home page route
 router.get("/", async (req, res) => {
   try {
     // Checks if the user is authenticated
@@ -14,10 +15,12 @@ router.get("/", async (req, res) => {
   }
 });
 
+// User profile route
 router.get("/user/:num", async (req, res) => {
   return res.render("user", Users[req.params.num - 1]);
 });
 
+// Login page route
 router.get("/login", async (req, res) => {
   if (req.isAuthenticated()) {
     return res.redirect("/dashboard");
@@ -26,6 +29,7 @@ router.get("/login", async (req, res) => {
   return res.render("login", { title: "login" });
 });
 
+// Logout route
 router.get("/logout", function (req, res, next) {
   req.logout(function (err) {
     if (err) {
@@ -35,6 +39,7 @@ router.get("/logout", function (req, res, next) {
   });
 });
 
+// Dashboard route
 router.get("/dashboard", async (req, res) => {
   if (!req.isAuthenticated()) {
     return res.redirect("/login");

@@ -1,3 +1,4 @@
+{{!-- This is the handlebar responsible for the register page. We are using tailwind CSS for the styling.--}}
 <div class="min-h-screen bg-zinc-200 py-6 flex flex-col justify-center sm:py-12">
   <div class="relative py-3 sm:max-w-xl sm:mx-auto">
     <div class="relative px-4 py-10 bg-stone-200 shadow-lg sm:p-20 border-4 bg-orange-900">
@@ -7,7 +8,10 @@
         </div>
         <div class="divide-y divide-gray-200">
           <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+{{!-- The form action syntax allows us to tell the route what method needs to be used when the form is completed.  --}}
             <form action="/register" method="post">
+{{!-- The #if statements in this case are being called thorugh handlebars. 
+In this instance it is saying 'if there are errors then display {{ error }}' --}}
               {{#if error}}
               <div class="relative mb-2">
                 <p class="text-red-500">{{ error }}</p>

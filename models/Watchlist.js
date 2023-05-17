@@ -4,9 +4,10 @@ const sequelize = require("../config/connection.js");
 
 class Watchlist extends Model {}
 
+//init method initialises the model
 Watchlist.init(
   {
-    // define columns
+    // define columns for the table which gets stored in the database
     watchlist_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -32,6 +33,9 @@ Watchlist.init(
       unique: true,
     },
   },
+  //specifies the database connection, disables auto timestamp.
+  //underscored: true converst camelCase to snake_case
+  //model name sets the model name to movie therefore this name should be referenced
   {
     sequelize,
     timestamps: false,

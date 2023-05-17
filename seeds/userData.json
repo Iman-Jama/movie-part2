@@ -1,26 +1,26 @@
 [
-    {
-        "user_id": "1",
-        "username": "Faith",
-        "email": "faith@gmail.com",
-        "password":"pass"
-    },
-    {
-        "user_id": "2",
-        "username": "Iman",
-        "email": "iman@gmail.com",
-        "password":"pass"
-    },
-    {
-        "user_id": "3",
-        "username": "Aaron",
-        "email": "aaron@gmail.com",
-        "password":"pass"
-    },
-    {
-        "user_id": "4",
-        "username": "Leesa",
-        "email": "leesa@gmail.com",
-        "password":"pass"
-    }
-  ]
+  {
+    "user_id": "1",
+    "username": "Faith",
+    "email": "faith@gmail.com",
+    "password": "pass"
+  },
+  {
+    "user_id": "2",
+    "username": "Iman",
+    "email": "iman@gmail.com",
+    "password": "pass"
+  },
+  {
+    "user_id": "3",
+    "username": "Aaron",
+    "email": "aaron@gmail.com",
+    "password": "pass"
+  },
+  {
+    "user_id": "4",
+    "username": "Leesa",
+    "email": "leesa@gmail.com",
+    "password": "pass"
+  }
+]
