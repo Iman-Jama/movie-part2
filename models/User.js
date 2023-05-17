@@ -4,9 +4,10 @@ const sequelize = require("../config/connection.js");
 
 class User extends Model {}
 
+//init method initialises the model
 User.init(
   {
-    // defines the columns
+    // define columns for the table which gets stored in the database
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -35,7 +36,9 @@ User.init(
       },
     },
   },
-
+  //specifies the database connection, disables auto timestamp.
+  //underscored: true converst camelCase to snake_case
+  //model name sets the model name to movie therefore this name should be referenced
   {
     sequelize,
     timestamps: false,

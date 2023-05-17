@@ -3,6 +3,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 
+// Configure passport to use LocalStrategy for authentication
 passport.use(
   new LocalStrategy(
     {
@@ -34,10 +35,14 @@ passport.use(
   )
 );
 
+// Serializes the user to store in the session
+//Serializing is the process of changing data into a format that is easily stored such as a string
 passport.serializeUser((user, done) => {
   done(null, user.user_id);
 });
 
+// Deserializes user from the session
+//Deserializing finds the corresponding data which allows the app to indentify and authenticate based on the stored session data
 passport.deserializeUser(async (user_id, done) => {
   try {
     const user = await User.findByPk(user_id);
