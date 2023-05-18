@@ -1,3 +1,5 @@
+{{!-- This is the partial handlebar responsible for the navbar. We are using tailwind CSS for the styling. --}}
+
 <nav class="shadow-lg bg-rose-900">
       <div class="max-w-6xl mx-auto px-4 flex justify-between items-center py-4">
         <div class="flex items-center md:ml-10 md:pl-6">
@@ -9,6 +11,7 @@
           <a href="/" class="cursor-pointer hover:text-emerald-500 ">The Sequel</a>
         </div>
         <div class="flex space-x-4">
+          {{!-- the navbar changes based on whether user is authenticated or not.  --}}
           {{#if isauthenticated}}
             <div class="relative">
                 <div class="ml-20 md:mr-10 md:pr-10">
