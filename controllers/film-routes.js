@@ -472,4 +472,32 @@ router.get("/film/:movieName", async (req, res) => {
     });
 });
 
+router.post("/reviews", async (req, res) => {
+  res.locals.currentUser = req.user;
+  try {
+    const reviewText = req.body.review_text;
+    const imdbId = req.body.imdb_id;
+
+    console.log(imdbId);
+
+    const movie = await Movie.findOne({ where: { imdb_id: imdbId } });
+
+    if (!movie) {
+      return res.status(404).json({ error: "Movie not found" });
+    }
+
+    const newReview = await Review.create({
+      imdb_id: imdbId,
+      review_text: reviewText,
+      user_id: req.user.user_id,
+    });
+
+    return res.redirect("dashboard");
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Server error" });
+  }
+});
+
+
 module.exports = router;
