@@ -3,21 +3,25 @@
 Partials are reusable sections of a webpage which can be used in multiple templates.
 The handlebars left in views are your main pages.  --}}
 
+
 <!DOCTYPE html>
 <html>
 <head>
+
   <meta charset="UTF-8">
-  {{!-- Title is dynamically added --}}
+   {{!-- Title is dynamically added --}}
   <title>{{ title }}</title>
   {{!-- These links are adding the CSS libraries.  --}}
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
-  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="/style.css">
 </head>
-<body class="min-h-screen bg-zinc-200 " x-data="{ dropdownOpen: false }">
+<body class="min-h-screen bg-zinc-300" x-data="{ dropdownOpen: false }">
 
-  <div id="main-div" class="min-h-full flex-column justify-space-around mx-20 bg-zinc-200 rounded-3xl min-h-screen">   
-{{!-- This is including the partial template for the navbar --}}
+  <div id="main-div" class="min-h-full flex-column justify-space-around md:mx-20 bg-zinc-200 rounded-3xl min-h-screen">   
+    {{!-- This is including the partial template for the navbar --}}
+
     {{>LInavbar}}
 
     <header class="display-flex justify-space-between align-center p-2"></header>
@@ -25,6 +29,8 @@ The handlebars left in views are your main pages.  --}}
     <main class="container container-fluid mt-5 min-h-screen">
       {{{ body }}}
     </main>
+
   </div>
+
 </body>
 </html>
