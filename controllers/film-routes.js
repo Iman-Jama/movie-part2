@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { Watchlist, Movie, Review, SearchHistory } = require("../models");
+require("dotenv").config();
+
 // ADD TO WATCHLIST ROUTES
 router.post("/filmadded", async (req, res) => {
   res.locals.currentUser = req.user;
@@ -126,7 +128,7 @@ router.post("/film", async (req, res) => {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "019a625d93msh4b8ca83c4e651e4p1b04f6jsn06afb2002bf9",
+      "X-RapidAPI-Key": process.env.Movie_One_API,
       "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
     },
   };
@@ -153,7 +155,7 @@ router.post("/film", async (req, res) => {
         var imdbIDKey = data.Search[0].imdbID;
 
         // Second API call to The Movie Database
-        var secondAPIKey = "97c267f9a2d9d89d1419f2261423af96";
+        var secondAPIKey = process.env.Movie_Two_API;
 
         fetch(
           "https://api.themoviedb.org/3/movie/" +
@@ -177,7 +179,9 @@ router.post("/film", async (req, res) => {
             var runtime = data.runtime;
 
             fetch(
-              "https://www.googleapis.com/youtube/v3/search?key=AIzaSyDM84Q5kKRoiKTM5XfoP7L8PCpL5im6eXU&type=video&part=snippet&maxResults=1&q=movie%20trailer%20" +
+              "https://www.googleapis.com/youtube/v3/search?key=" +
+                process.env.Youtube_API +
+                "&type=video&part=snippet&maxResults=1&q=movie%20trailer%20" +
                 movieName
             )
               .then(function (response) {
@@ -185,9 +189,9 @@ router.post("/film", async (req, res) => {
               })
 
               .then(async function (data) {
-                 var { videoId } = data.items[0].id;
+                var { videoId } = data.items[0].id;
 
-                 var trailer = "https://www.youtube.com/embed/" + videoId;
+                var trailer = "https://www.youtube.com/embed/" + videoId;
                 var movieData = {
                   movie_name: movieName,
                   imdb_id: imdbIDKey,
@@ -197,7 +201,7 @@ router.post("/film", async (req, res) => {
                   poster_url: posterURL,
                   rating: rating,
                   runtime: runtime,
-                   trailer: trailer,
+                  trailer: trailer,
                 };
 
                 let reviews = [];
@@ -280,7 +284,7 @@ router.post("/film", async (req, res) => {
                   description: description,
                   poster_URL: posterURL,
                   rating: rating,
-                   trailer: trailer,
+                  trailer: trailer,
                   runtime: runtime,
                   reviews: reviews,
                   review_id: reviewID,
@@ -302,7 +306,7 @@ router.get("/film/:movieName", async (req, res) => {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "019a625d93msh4b8ca83c4e651e4p1b04f6jsn06afb2002bf9",
+      "X-RapidAPI-Key": process.env.Movie_One_API,
       "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
     },
   };
@@ -329,7 +333,7 @@ router.get("/film/:movieName", async (req, res) => {
         var imdbIDKey = data.Search[0].imdbID;
 
         // Second API call to The Movie Database
-        var secondAPIKey = "97c267f9a2d9d89d1419f2261423af96";
+        var secondAPIKey = process.env.Movie_Two_API;
 
         fetch(
           "https://api.themoviedb.org/3/movie/" +
@@ -353,7 +357,9 @@ router.get("/film/:movieName", async (req, res) => {
             var runtime = data.runtime;
 
             fetch(
-              "https://www.googleapis.com/youtube/v3/search?key=AIzaSyDM84Q5kKRoiKTM5XfoP7L8PCpL5im6eXU&type=video&part=snippet&maxResults=1&q=movie%20trailer%20" +
+              "https://www.googleapis.com/youtube/v3/search?key=" +
+                process.env.Youtube_API +
+                "&type=video&part=snippet&maxResults=1&q=movie%20trailer%20" +
                 movieName
             )
               .then(function (response) {
@@ -373,7 +379,7 @@ router.get("/film/:movieName", async (req, res) => {
                   poster_url: posterURL,
                   rating: rating,
                   runtime: runtime,
-                   trailer: trailer,
+                  trailer: trailer,
                 };
 
                 let reviews = [];
@@ -456,7 +462,7 @@ router.get("/film/:movieName", async (req, res) => {
                   description: description,
                   poster_URL: posterURL,
                   rating: rating,
-                   trailer: trailer,
+                  trailer: trailer,
                   runtime: runtime,
                   reviews: reviews,
                   review_id: reviewID,
@@ -498,6 +504,5 @@ router.post("/reviews", async (req, res) => {
     return res.status(500).json({ error: "Server error" });
   }
 });
-
 
 module.exports = router;
