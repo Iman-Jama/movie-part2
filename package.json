@@ -4,7 +4,7 @@
   "description": "A website to access your favourite movies, reviews and ratings, as well as follow your friends to see their favourites too.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "devStart": "nodemon server.js",
     "seed": "node seeds/seed.js"
