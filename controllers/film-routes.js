@@ -185,9 +185,9 @@ router.post("/film", async (req, res) => {
               })
 
               .then(async function (data) {
-                // var { videoId } = data.items[0].id;
+                 var { videoId } = data.items[0].id;
 
-                // var trailer = "https://www.youtube.com/embed/" + videoId;
+                 var trailer = "https://www.youtube.com/embed/" + videoId;
                 var movieData = {
                   movie_name: movieName,
                   imdb_id: imdbIDKey,
@@ -197,7 +197,7 @@ router.post("/film", async (req, res) => {
                   poster_url: posterURL,
                   rating: rating,
                   runtime: runtime,
-                  // trailer: trailer,
+                   trailer: trailer,
                 };
 
                 let reviews = [];
@@ -280,7 +280,7 @@ router.post("/film", async (req, res) => {
                   description: description,
                   poster_URL: posterURL,
                   rating: rating,
-                  // trailer: trailer,
+                   trailer: trailer,
                   runtime: runtime,
                   reviews: reviews,
                   review_id: reviewID,
@@ -361,9 +361,9 @@ router.get("/film/:movieName", async (req, res) => {
               })
 
               .then(async function (data) {
-                // var { videoId } = data.items[0].id;
+                var { videoId } = data.items[0].id;
 
-                // var trailer = "https://www.youtube.com/embed/" + videoId;
+                var trailer = "https://www.youtube.com/embed/" + videoId;
                 var movieData = {
                   movie_name: movieName,
                   imdb_id: imdbIDKey,
@@ -373,7 +373,7 @@ router.get("/film/:movieName", async (req, res) => {
                   poster_url: posterURL,
                   rating: rating,
                   runtime: runtime,
-                  // trailer: trailer,
+                   trailer: trailer,
                 };
 
                 let reviews = [];
@@ -456,7 +456,7 @@ router.get("/film/:movieName", async (req, res) => {
                   description: description,
                   poster_URL: posterURL,
                   rating: rating,
-                  // trailer: trailer,
+                   trailer: trailer,
                   runtime: runtime,
                   reviews: reviews,
                   review_id: reviewID,
@@ -471,5 +471,33 @@ router.get("/film/:movieName", async (req, res) => {
       }
     });
 });
+
+router.post("/reviews", async (req, res) => {
+  res.locals.currentUser = req.user;
+  try {
+    const reviewText = req.body.review_text;
+    const imdbId = req.body.imdb_id;
+
+    console.log(imdbId);
+
+    const movie = await Movie.findOne({ where: { imdb_id: imdbId } });
+
+    if (!movie) {
+      return res.status(404).json({ error: "Movie not found" });
+    }
+
+    const newReview = await Review.create({
+      imdb_id: imdbId,
+      review_text: reviewText,
+      user_id: req.user.user_id,
+    });
+
+    return res.redirect("back");
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 module.exports = router;
