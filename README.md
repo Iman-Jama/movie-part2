@@ -67,7 +67,7 @@ I want to visit an online site, where I can login, have my credentials verified 
 
 So that I can share my thoughts on the film and decide if I want to watch a movie from other people's reviews.
 
-## Authors
+## Authors;
 
 [Leesa Ali](https://github.com/Leesaal)
 
