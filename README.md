@@ -45,11 +45,11 @@ This is a movie search engine that allows the user to login, authenticate their 
 
 ## Deployment
 
-[Link to The Movie SQL]()
+[Link to The Movie SQL](https://the-movie-sequel.herokuapp.com/)
 
 [Link to GitHub](https://github.com/Iman-Jama/movie-part2)
 
-[Link to Heroku]()
+[Link to Heroku](https://the-movie-sequel.herokuapp.com/)
 
 ## Installation
 
@@ -58,6 +58,8 @@ Please run "npm i" to install the required dependencies prior to running the pro
 ## Final Result
 
 ![Final Result](/public/Images/screenshot.png)
+<img width="1440" alt="Screenshot 2023-05-22 at 21 57 36" src="https://github.com/Iman-Jama/movie-part2/assets/118930290/6f9c1c21-e11a-4031-b86e-fc4928b283e2">
+
 
 ## User Story
 
