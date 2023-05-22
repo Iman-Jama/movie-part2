@@ -61,7 +61,7 @@ Please run "npm i" to install the required dependencies prior to running the pro
 
 ## User Story
 
-As an opinionated movie lover,
+As a movie lover,
 
 I want to visit an online site, where I can login, have my credentials verified and search a movie by it's title and see information on it. I then want to add/update/delete reviews for the films I have seen and see other people's thoughts on the movie too.
 
